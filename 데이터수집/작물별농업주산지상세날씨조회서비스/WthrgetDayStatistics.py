@@ -42,7 +42,7 @@ def getDayStatistics(AREA_ID, PA_CROP_SPE_ID, ST_YMD='20160411', ED_YMD='2021041
         return 0, [AREA_ID, PA_CROP_SPE_ID]
 
 def getDayStatistics_by_crops():
-    areakey=pd.read_csv('whtrInfoService_areakey.csv')
+    areakey=pd.read_csv('wthrInfoService_areakey.csv')
     # 유니크한 지역-작물 데이터 프레임
     uniqueld=areakey.drop_duplicates(['areald','paCropName'], keep='first').drop_duplicates(['areald'])
     
