@@ -3,27 +3,20 @@
 
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode, quote_plus
-import xml.etree.ElementTree as ET
 from datetime import datetime
 import json
-import pandas as pd
-from collections import OrderedDict
 
 def to_json(fname, items):
-    jsondic={}
-    for i, item in enumerate(items):
-        jsondic[i]=item
-        
     with open(fname+'.json', 'w', encoding='utf-8') as make_file:
-        json.dump(jsondic, make_file, ensure_ascii=False, indent='\t')
+        json.dump(items, make_file, ensure_ascii=False, indent='\t')
 
-def getDayStatistics(AREA_ID, PA_CROP_SPE_ID, ST_YMD='20160411', ED_YMD='20210411'):
+def getDayStatistics(AREA_ID, PA_CROP_SPE_ID, ST_YMD='20000101', ED_YMD='20210411'):
     url = "http://apis.data.go.kr/1360000/FmlandWthrInfoService/getDayStatistics"
     key ='tTokC/Sm3k4yWmMacSZ4ONS3jJj4wpSPGxEvj2bM7ywjmIuOsUpHRahXJmWgL+Npl1IFH311MA8ASyHP5ZDDhA=='
     
     queryParams = '?' + urlencode({ quote_plus('ServiceKey') : key, 
                                    quote_plus('pageNo') : '1', 
-                                   quote_plus('numOfRows') : '2000',
+                                   quote_plus('numOfRows') : '30000',
                                    quote_plus('dataType') : 'json', 
                                    quote_plus('ST_YMD') : ST_YMD, 
                                    quote_plus('ED_YMD') : ED_YMD, 
@@ -36,7 +29,7 @@ def getDayStatistics(AREA_ID, PA_CROP_SPE_ID, ST_YMD='20160411', ED_YMD='2021041
     response=json.loads(urlopen(request).read())
     
     if response['response']['header']['resultCode']=='00':
-        to_json(str(AREA_ID), response['response']['body']['items']['item'])
+        to_json(str(AREA_ID), response['response']['body']['items'])
         return 1, [AREA_ID, PA_CROP_SPE_ID]
     else:
         return 0, [AREA_ID, PA_CROP_SPE_ID]
@@ -70,6 +63,7 @@ def getDayStatistics_by_crops():
 
 if __name__=="__main__":
     NORMAL_SERVICE=getDayStatistics_by_crops()
+
 
 
 
