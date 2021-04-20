@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     var Tab1 : Menu1?
+    
     init() {
         Tab1 = Menu1()
     }

@@ -29,6 +29,8 @@ struct Menu1: View {
                     Cell(foodContent: Food)
                 }
             }
+        
+        
     }
 }
 

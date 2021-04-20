@@ -253,11 +253,9 @@
 					};
 					680E657D261DFD4900DC77B8 = {
 						CreatedOnToolsVersion = 12.4;
-						TestTargetID = 680E656C261DFD4000DC77B8;
 					};
 					680E6588261DFD4900DC77B8 = {
 						CreatedOnToolsVersion = 12.4;
-						TestTargetID = 680E656C261DFD4000DC77B8;
 					};
 				};
 			};
@@ -520,7 +518,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 825B8L44JT;
 				INFOPLIST_FILE = Jongp2Tests/Info.plist;
@@ -534,7 +531,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jongp2.app/Jongp2";
 			};
 			name = Debug;
 		};
@@ -542,7 +538,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 825B8L44JT;
 				INFOPLIST_FILE = Jongp2Tests/Info.plist;
@@ -556,7 +551,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jongp2.app/Jongp2";
 			};
 			name = Release;
 		};
@@ -574,9 +568,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = junseok.Jongp2UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Jongp2;
 			};
 			name = Debug;
 		};
@@ -594,9 +588,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = junseok.Jongp2UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Jongp2;
 			};
 			name = Release;
 		};
