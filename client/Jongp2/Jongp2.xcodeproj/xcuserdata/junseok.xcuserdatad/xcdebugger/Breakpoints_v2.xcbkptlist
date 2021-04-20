@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "8F4F6389-7B75-49D2-ABE7-B3E049421E83"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6B893344-B38B-4571-A94C-C09ABF26DF05"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jongp2/API/request.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "requestPost(url:method:param:completionHandler:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "67E7CD73-B824-44D2-AB6D-ABB0BFF75154"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jongp2/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "67E7CD73-B824-44D2-AB6D-ABB0BFF75154 - ac2bb63ff382ba92"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Jongp2.ContentView.body.getter : some"
+                  moduleName = "Jongp2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/junseok/Desktop/Jongp2/Jongp2/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "103">
+               </Location>
+               <Location
+                  uuid = "67E7CD73-B824-44D2-AB6D-ABB0BFF75154 - 7f590193a2fb917b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationBarTitle(_: SwiftUI.LocalizedStringKey, displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode) -&gt; some&gt;&gt;.0 in Jongp2.ContentView.body.getter : some"
+                  moduleName = "Jongp2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/junseok/Desktop/Jongp2/Jongp2/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "214">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "70B77079-1F18-4926-9DED-BB87AF839783"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jongp2/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "70B77079-1F18-4926-9DED-BB87AF839783 - 7f590193a2fb917b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationBarTitle(_: SwiftUI.LocalizedStringKey, displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode) -&gt; some&gt;&gt;.0 in Jongp2.ContentView.body.getter : some"
+                  moduleName = "Jongp2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/junseok/Desktop/Jongp2/Jongp2/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "214">
+               </Location>
+               <Location
+                  uuid = "70B77079-1F18-4926-9DED-BB87AF839783 - b5f22187c496f479"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.tabItem&lt;A where A1: SwiftUI.View&gt;(() -&gt; A1) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.tabItem&lt;A where A1: SwiftUI.View&gt;(() -&gt; A1) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationBarTitle(_: SwiftUI.LocalizedStringKey, displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode) -&gt; some&gt;&gt;.0 in Jongp2.ContentView.body.getter : some"
+                  moduleName = "Jongp2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/junseok/Desktop/Jongp2/Jongp2/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "270">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6141BD97-840E-460E-9ED3-B35D64A8A917"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jongp2/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "516E3C7D-0D0B-4455-B3BE-BAF54F151679"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jongp2/API/request.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
