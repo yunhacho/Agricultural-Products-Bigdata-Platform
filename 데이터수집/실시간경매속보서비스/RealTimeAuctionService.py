@@ -10,7 +10,6 @@ import time
 import threading
 from kafka import KafkaProducer
 
-
 class RealTimeAuctionService:
     
     def __init__(self, topic, timeinterval=5, numofRows=100):
@@ -22,7 +21,11 @@ class RealTimeAuctionService:
         self.producer=KafkaProducer(acks=0, compression_type=None, bootstrap_servers=["127.0.0.1:9092"],
                       value_serializer=lambda x: json.dumps(x).encode('utf-8'))
         self.topic=topic
-        
+        self.timestamp=datetime.strptime(str(datetime.today().day)+"일"+" 00:00 00", '%d일 %H:%M %S')
+    
+    def todatetime(self,strtime):
+        return datetime.strptime(strtime, '%d일 %H:%M %S')
+    
     def RltmAucBrknewsService(self):
         url='http://openapi.epis.or.kr/openapi/service/RltmAucBrknewsService/getWltRltmAucBrknewsList'
         queryParams = '?' + urlencode({ quote_plus('ServiceKey') : self.__servicekey,
@@ -62,13 +65,16 @@ class RealTimeAuctionService:
         if RltmAucTree.find("./header/resultCode").text=='00':
             totalcount=int(RltmAucTree.find("./body/totalCount").text)
             items=self.RltmAucParsing(RltmAucTree, totalcount-self.existcount)
-            
+
             if(totalcount-self.existcount!=0):
-                for item in items:
-                    self.producer.send(self.topic, value=item)
-                    self.producer.flush()
-                    print(json.dumps(item, indent=2, ensure_ascii=False))
+                for item in items[::-1]:
+                    if self.todatetime(item['bidtime']) > self.timestamp:
+                        print(json.dumps(item, indent=2, ensure_ascii=False))
+                        #self.producer.send(self.topic, value=item)
+                        #self.producer.flush()
+                        
                 self.existcount=totalcount
+                self.timestamp=self.todatetime(item['bidtime'])
         
         threading.Timer(self.timeinterval, self.RltmAucNewNews).start()
 
