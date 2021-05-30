@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,7 @@
 		682ECB6B2663D07A00F02DD3 /* SecondTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 682ECB6A2663D07A00F02DD3 /* SecondTab.storyboard */; };
 		682ECB6E2663D09900F02DD3 /* FirstTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB6D2663D09900F02DD3 /* FirstTabController.swift */; };
 		682ECB702663D0A500F02DD3 /* SecondTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB6F2663D0A500F02DD3 /* SecondTabController.swift */; };
+		682ECB732663D79100F02DD3 /* WasURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB722663D79100F02DD3 /* WasURL.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		682ECB6A2663D07A00F02DD3 /* SecondTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SecondTab.storyboard; sourceTree = "<group>"; };
 		682ECB6D2663D09900F02DD3 /* FirstTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTabController.swift; sourceTree = "<group>"; };
 		682ECB6F2663D0A500F02DD3 /* SecondTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTabController.swift; sourceTree = "<group>"; };
+		682ECB722663D79100F02DD3 /* WasURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WasURL.swift; sourceTree = "<group>"; };
 		993BCA4680CBB609DC481C21 /* Pods_Jongp2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jongp2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE79E3EF6CFC6A7CB4CAF233 /* Pods-Jongp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jongp2.release.xcconfig"; path = "Target Support Files/Pods-Jongp2/Pods-Jongp2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +73,7 @@
 		682ECB522663CDAE00F02DD3 /* Jongp2 */ = {
 			isa = PBXGroup;
 			children = (
+				682ECB712663D78000F02DD3 /* API */,
 				682ECB6C2663D08100F02DD3 /* ViewController */,
 				682ECB692663D06A00F02DD3 /* StoryBoard */,
 				682ECB532663CDAE00F02DD3 /* AppDelegate.swift */,
@@ -102,13 +105,20 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		682ECB712663D78000F02DD3 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				682ECB722663D79100F02DD3 /* WasURL.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		8DA76959BD08D45A7F149B5C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				40C4E55E3928730D7835E507 /* Pods-Jongp2.debug.xcconfig */,
 				BE79E3EF6CFC6A7CB4CAF233 /* Pods-Jongp2.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -241,6 +251,7 @@
 				682ECB702663D0A500F02DD3 /* SecondTabController.swift in Sources */,
 				682ECB6E2663D09900F02DD3 /* FirstTabController.swift in Sources */,
 				682ECB562663CDAE00F02DD3 /* SceneDelegate.swift in Sources */,
+				682ECB732663D79100F02DD3 /* WasURL.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
