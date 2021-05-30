@@ -19,11 +19,58 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="농산품 조회" image="cart.fill" catalog="system" id="iUP-TZ-D0p"/>
+                    <navigationItem key="navigationItem" id="fDt-Ya-AMi"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="MqE-qv-tTi" kind="show" id="eJl-LL-lKV"/>
+                        <segue destination="s2p-pl-TJu" kind="show" id="MkT-xa-E06"/>
+                        <segue destination="6je-y9-SmU" kind="show" id="Sao-83-Ba2"/>
+                        <segue destination="0IU-ml-nj4" kind="show" id="Txt-GK-kkE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="97" y="79"/>
+            <point key="canvasLocation" x="-120" y="91"/>
+        </scene>
+        <!--FoodCompareViewController-->
+        <scene sceneID="JNp-Er-OKp">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="FoodCompareView" storyboardName="FoodCompare" referencedIdentifier="FoodCompareViewController" id="MqE-qv-tTi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="BnA-yd-tQM"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JgR-wl-yf6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="526" y="30"/>
+        </scene>
+        <!--GraphViewController-->
+        <scene sceneID="thK-dS-s5J">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="GraphView" storyboardName="GraphView" referencedIdentifier="GraphViewController" id="6je-y9-SmU" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="wzs-rt-5Qo"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bKU-of-Lg9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="525" y="185"/>
+        </scene>
+        <!--PredictPriceViewController-->
+        <scene sceneID="C7f-Od-YpE">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="PredictPriceView" storyboardName="PredictPrice" referencedIdentifier="PredictPriceViewController" id="0IU-ml-nj4" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Qj0-iw-2Pb"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="89n-iX-44l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="525" y="283"/>
+        </scene>
+        <!--DateSearchViewController-->
+        <scene sceneID="KYN-XD-bqc">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="DateSearchView" storyboardName="DateSearch" referencedIdentifier="DateSearchViewController" id="s2p-pl-TJu" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="kY8-ug-nIf"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oHq-8h-Yvu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="538" y="100"/>
         </scene>
     </scenes>
     <resources>
