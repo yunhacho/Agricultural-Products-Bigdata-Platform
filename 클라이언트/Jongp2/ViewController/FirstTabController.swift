@@ -28,6 +28,7 @@ class FirstTabController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initValue()
+        
         InitTabview()
         addView()
         makeConstraints()
@@ -50,7 +51,7 @@ class FirstTabController: UIViewController {
     func InitTabview(){
         
         TabCellWidth = self.view.frame.width * 0.25
-        TabCellHeight = TabCellWidth * 0.6
+        TabCellHeight = TabCellWidth * 0.5
         
         let layout = UICollectionViewFlowLayout()
         
@@ -63,6 +64,7 @@ class FirstTabController: UIViewController {
         //첫번째를 선택하게 둠
         let firstIndexPath = IndexPath(item: 0, section: 0)
         collectionView(tabCollectionView, didSelectItemAt: firstIndexPath)
+        tabCollectionView.selectItem(at: firstIndexPath, animated: false, scrollPosition: .right)
     }
     
     func makeConstraints(){
@@ -95,10 +97,8 @@ extension FirstTabController : UICollectionViewDelegate, UICollectionViewDataSou
         if collectionView == tabCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabBarCell", for: indexPath) as! TabBarCollectionViewCell
             cell.setTitle(title: list[indexPath.row])
-            if indexPath.row == 0 {
+            if indexPath.row == 0{
                 cell.isSelected = true
-            }else {
-                cell.isSelected = false
             }
             
             return cell
@@ -110,12 +110,13 @@ extension FirstTabController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == tabCollectionView {
-            
+                
             for view in self.contentView.subviews {
                 print(view)
                 view.removeFromSuperview()
             }
             
+            tabCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .right)
             if indexPath.row == 0{
                 let Controller = selectStoryBoard.instantiateViewController(withIdentifier: "FoodCompareView") as! FoodCompareViewController
                 self.contentView.addSubview(Controller.view)
@@ -126,8 +127,6 @@ extension FirstTabController : UICollectionViewDelegate, UICollectionViewDataSou
                 let Controller = selectStoryBoard.instantiateViewController(withIdentifier: "DateSearchView") as! DateSearchViewController
                 self.contentView.addSubview(Controller.view)
                 addChild(Controller)
-                
-                //self.addChildViewController(newsPageVC)
                 didMove(toParent: self)
                 
             }

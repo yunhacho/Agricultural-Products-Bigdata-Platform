@@ -15,6 +15,8 @@ class TabBarCollectionViewCell: UICollectionViewCell {
         titleLabel.text = title
         titleLabel.textAlignment = .center
         self.contentView.addSubview(titleLabel)
+        titleLabel.textColor = .white
+        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         //self.contentView.layer.borderWidth = 1
         //self.contentView.layer.borderColor = UIColor.gray.cgColor
         self.backgroundColor = .systemBlue
@@ -33,9 +35,10 @@ class TabBarCollectionViewCell: UICollectionViewCell {
         willSet {
             if newValue {
                 titleLabel.textColor = .black
-                titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+                titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
             } else {
                 titleLabel.textColor = .white
+                titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
             }
         }
     }

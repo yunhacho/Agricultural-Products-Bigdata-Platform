@@ -26,19 +26,29 @@ class FoodCompareViewController : UIViewController{
     
     let SearchBtn = UIButton()
     
-    let ItemNames = ["양파" , "오이", "파", "쌀", "호박"]
-    var Item = "양파"
+    let ItemNames = ["오이" , "양파", "파", "쌀", "호박"]
+    var Item = "옹"
     
     var selectItem = ""
     var selectDate = ""
+    
+    let FoodTitleLabel = UIView()
+    let FoodTableView = UITableView()
+    var FoodContents : [FoodContent] = []
     
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
         InitUI()
         addView()
+        
         makeConstraints()
         InitItemPicker()
         InitDatePicker()
+        
+        
+        InitTitle()
+        initFoodContents()
+        tableViewSetting(width: self.view.frame.width, height: self.view.frame.height * 0.3)
     }
     
     func addView(){
@@ -52,6 +62,9 @@ class FoodCompareViewController : UIViewController{
         SettingView.addSubview(ItemEditText)
         
         self.view.addSubview(SearchBtn)
+        
+        self.view.addSubview(FoodTitleLabel)
+        self.view.addSubview(FoodTableView)
     }
     
     func InitUI(){
@@ -79,12 +92,67 @@ class FoodCompareViewController : UIViewController{
     @objc func onPress() {
         print("Search click")
     }
-
+    
+    func InitTitle(){
+        FoodTitleLabel.layer.borderWidth = 0.5
+        
+        
+        let nameLabel = UILabel()
+        let kindLabel = UILabel()
+        let priceLabel = UILabel()
+        let unitLabel = UILabel()
+        
+        nameLabel.text = "품목명(등급)"
+        nameLabel.textAlignment = .center
+        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        
+        kindLabel.text = "종류"
+        kindLabel.textAlignment = .center
+        kindLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        
+        priceLabel.text = "가격"
+        priceLabel.textAlignment = .center
+        priceLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        
+        unitLabel.text = "무게/개수"
+        unitLabel.textAlignment = .center
+        unitLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        
+        FoodTitleLabel.addSubview(nameLabel)
+        FoodTitleLabel.addSubview(kindLabel)
+        FoodTitleLabel.addSubview(priceLabel)
+        FoodTitleLabel.addSubview(unitLabel)
+        
+        nameLabel.snp.makeConstraints{ make in
+            make.width.equalToSuperview().multipliedBy(0.25)
+            make.height.equalToSuperview()
+            make.leading.equalToSuperview()
+        }
+        
+        kindLabel.snp.makeConstraints{ make in
+            make.width.equalToSuperview().multipliedBy(0.35)
+            make.height.equalToSuperview()
+            make.leading.equalTo(nameLabel.snp.trailing)
+        }
+        
+        priceLabel.snp.makeConstraints{ make in
+            make.width.equalToSuperview().multipliedBy(0.2)
+            make.height.equalToSuperview()
+            make.leading.equalTo(kindLabel.snp.trailing)
+        }
+        
+        unitLabel.snp.makeConstraints{ make in
+            make.width.equalToSuperview().multipliedBy(0.2)
+            make.height.equalToSuperview()
+            make.leading.equalTo(priceLabel.snp.trailing)
+        }
+    }
+    
     func makeConstraints(){
 
         SettingView.snp.makeConstraints{ make in
             make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.075)
+            make.height.equalToSuperview().multipliedBy(0.06)
             make.left.right.top.equalTo(0)
         }
         
@@ -124,9 +192,65 @@ class FoodCompareViewController : UIViewController{
             make.leading.equalToSuperview()
             make.top.equalTo(SettingView.snp.bottom)
         }
+        
+        FoodTitleLabel.snp.makeConstraints{ make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.06)
+            make.top.equalTo(SearchBtn.snp.bottom)
+        }
+        
+        FoodTableView.snp.makeConstraints{ make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.9)
+            make.top.equalTo(FoodTitleLabel.snp.bottom)
+        }
     }
     
+    func tableViewSetting(width : CGFloat, height : CGFloat){
+        FoodTableView.translatesAutoresizingMaskIntoConstraints = false
+        FoodTableView.register(FoodCell.self, forCellReuseIdentifier: FoodCell.identifier)
+        FoodTableView.dataSource = self
+        FoodTableView.rowHeight = height * 0.25
+    }
+    
+    func initFoodContents(){
+        for _ in 0..<10{
+            FoodContents.append(FoodContent(item_name: "오이", kind_name: "다다기계통(100개)", rank: "상품", price: 123450, unit: "10Kg", timeStamp: "2019-04-19"))
+        }
+    }
+    
+}
 
+extension FoodCompareViewController : UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      return FoodContents.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: FoodCell.identifier, for: indexPath) as! FoodCell
+        cell.selectionStyle = .none
+        
+        if FoodContents.count > 0{
+            cell.itemNameLabel.text = FoodContents[indexPath.row].item_name + "(\(FoodContents[indexPath.row].rank))"
+            cell.kindLabel.text = FoodContents[indexPath.row].kind_name
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            cell.priceLabel.text = numberFormatter.string(for: FoodContents[indexPath.row].price)!
+            cell.unitLabel.text = FoodContents[indexPath.row].unit
+            cell.timestampLabel.text = FoodContents[indexPath.row].timeStamp
+            
+            return cell
+        }
+        else {
+            cell.itemNameLabel.text = "Not exist Any record"
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    }
+    
     
 }
 
@@ -252,3 +376,11 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
     
 }
 
+struct FoodContent {
+    let item_name : String
+    let kind_name : String
+    let rank : String
+    let price : Int
+    let unit : String
+    let timeStamp : String
+}
