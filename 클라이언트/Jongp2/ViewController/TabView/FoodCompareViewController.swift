@@ -36,6 +36,9 @@ class FoodCompareViewController : UIViewController{
     let FoodTableView = UITableView()
     var FoodContents : [FoodContent] = []
     
+    let borderWidth : CGFloat = 0.2
+    let borderColor : CGColor = UIColor.lightGray.cgColor
+    
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
         InitUI()
@@ -75,10 +78,11 @@ class FoodCompareViewController : UIViewController{
         
         DateTitleLabel.text = "날짜"
         DateTitleLabel.textAlignment = .center
+        DateTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         
         ItemTitleLabel.text = "품목"
         ItemTitleLabel.textAlignment = .center
-        
+        ItemTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
 //        let config = UIImage.SymbolConfiguration(pointSize: 28, weight: .medium, scale: .default)
 //        let systemImage = UIImage(systemName: "magnifyingglass", withConfiguration: config )
 //
@@ -123,24 +127,32 @@ class FoodCompareViewController : UIViewController{
         FoodTitleLabel.addSubview(priceLabel)
         FoodTitleLabel.addSubview(unitLabel)
         
+        nameLabel.layer.borderWidth = borderWidth
+        nameLabel.layer.borderColor = borderColor
         nameLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.25)
             make.height.equalToSuperview()
             make.leading.equalToSuperview()
         }
         
+        kindLabel.layer.borderWidth = borderWidth
+        kindLabel.layer.borderColor = borderColor
         kindLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.35)
             make.height.equalToSuperview()
             make.leading.equalTo(nameLabel.snp.trailing)
         }
         
+        priceLabel.layer.borderWidth = borderWidth
+        priceLabel.layer.borderColor = borderColor
         priceLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.2)
             make.height.equalToSuperview()
             make.leading.equalTo(kindLabel.snp.trailing)
         }
         
+        unitLabel.layer.borderWidth = borderWidth
+        unitLabel.layer.borderColor = borderColor
         unitLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.2)
             make.height.equalToSuperview()
@@ -158,6 +170,8 @@ class FoodCompareViewController : UIViewController{
         
         let Cellheight : Double = 1
         
+        DateTitleLabel.layer.borderWidth = borderWidth
+        DateTitleLabel.layer.borderColor = borderColor
         DateTitleLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.2)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -165,20 +179,26 @@ class FoodCompareViewController : UIViewController{
             make.top.equalTo(self.view).offset(0)
         }
         
+        DateEditText.layer.borderWidth = borderWidth
+        DateEditText.layer.borderColor = borderColor
         DateEditText.snp.makeConstraints{ make in
-            make.width.equalToSuperview().multipliedBy(0.25)
+            make.width.equalToSuperview().multipliedBy(0.35)
             make.height.equalToSuperview().multipliedBy(Cellheight)
             make.leading.equalTo(DateTitleLabel.snp.trailing)
             make.top.equalTo(DateTitleLabel.snp.top)
         }
         
+        ItemTitleLabel.layer.borderWidth = borderWidth
+        ItemTitleLabel.layer.borderColor = borderColor
         ItemTitleLabel.snp.makeConstraints{ make in
-            make.width.equalToSuperview().multipliedBy(0.3)
+            make.width.equalToSuperview().multipliedBy(0.2)
             make.height.equalToSuperview().multipliedBy(Cellheight)
             make.leading.equalTo(DateEditText.snp.trailing)
             make.top.equalTo(DateTitleLabel.snp.top)
         }
         
+        ItemEditText.layer.borderWidth = borderWidth
+        ItemEditText.layer.borderColor = borderColor
         ItemEditText.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.25)
             make.height.equalToSuperview().multipliedBy(Cellheight)

@@ -45,6 +45,8 @@ class DateSearchViewController : UIViewController{
     let FoodTableView = UITableView()
     var FoodContents : [FoodContent] = []
 
+    let borderWidth : CGFloat = 0.2
+    let borderColor : CGColor = UIColor.lightGray.cgColor
     
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
@@ -85,9 +87,11 @@ class DateSearchViewController : UIViewController{
         
         DateTitleLabel.text = "기간"
         DateTitleLabel.textAlignment = .center
+        DateTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         
         ItemTitleLabel.text = "품목"
         ItemTitleLabel.textAlignment = .center
+        DateTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         
         SlashUILabel.text = "-"
         SlashUILabel.textAlignment = .center
@@ -133,24 +137,32 @@ class DateSearchViewController : UIViewController{
         FoodTitleLabel.addSubview(priceLabel)
         FoodTitleLabel.addSubview(unitLabel)
         
+        nameLabel.layer.borderWidth = borderWidth
+        nameLabel.layer.borderColor = borderColor
         nameLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.25)
             make.height.equalToSuperview()
             make.leading.equalToSuperview()
         }
         
+        kindLabel.layer.borderWidth = borderWidth
+        kindLabel.layer.borderColor = borderColor
         kindLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.35)
             make.height.equalToSuperview()
             make.leading.equalTo(nameLabel.snp.trailing)
         }
         
+        priceLabel.layer.borderWidth = borderWidth
+        priceLabel.layer.borderColor = borderColor
         priceLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.2)
             make.height.equalToSuperview()
             make.leading.equalTo(kindLabel.snp.trailing)
         }
         
+        unitLabel.layer.borderWidth = borderWidth
+        unitLabel.layer.borderColor = borderColor
         unitLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.2)
             make.height.equalToSuperview()
@@ -168,6 +180,8 @@ class DateSearchViewController : UIViewController{
         
         let Cellheight : Double = 1
         
+        DateTitleLabel.layer.borderWidth = borderWidth * 2
+        DateTitleLabel.layer.borderColor = borderColor
         DateTitleLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.15)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -175,7 +189,6 @@ class DateSearchViewController : UIViewController{
             make.top.equalTo(self.view).offset(0)
         }
         
-   
         StartDateEditText.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.25)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -197,6 +210,8 @@ class DateSearchViewController : UIViewController{
             make.top.equalTo(DateTitleLabel.snp.top)
         }
         
+        ItemTitleLabel.layer.borderWidth = borderWidth * 2
+        ItemTitleLabel.layer.borderColor = borderColor
         ItemTitleLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.15)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -205,7 +220,7 @@ class DateSearchViewController : UIViewController{
         }
         
         ItemEditText.snp.makeConstraints{ make in
-            make.width.equalToSuperview().multipliedBy(0.15)
+            make.width.equalToSuperview().multipliedBy(0.18)
             make.height.equalToSuperview().multipliedBy(Cellheight)
             make.leading.equalTo(ItemTitleLabel.snp.trailing)
             make.top.equalTo(DateTitleLabel.snp.top)
@@ -223,6 +238,7 @@ class DateSearchViewController : UIViewController{
             make.height.equalToSuperview().multipliedBy(0.06)
             make.top.equalTo(SearchBtn.snp.bottom)
         }
+        
         
         FoodTableView.snp.makeConstraints{ make in
             make.width.equalToSuperview()

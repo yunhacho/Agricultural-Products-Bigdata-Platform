@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 import DropDown
+import Charts
 
 class GraphViewController : UIViewController{
     
@@ -42,7 +43,7 @@ class GraphViewController : UIViewController{
     
     let SearchBtn = UIButton()
     
-    let ItemNames = ["유가별 채소 가격 변동" , "연도별 채소 생산량", "기온 및 습도에 따른 채소 가격 변동", "곡물 및 식량물가에 따른 채소 가격 변동"]
+    let ItemNames = ["유가별 채소 가격 변동" , "연도별 채소 생산량,면적,평균가", "기온 및 습도에 따른 채소 가격 변동", "기타 요인에 따른 채소 가격 변동"]
     var Item = "유가별 채소 가격 변동"
     
     var selectItem = "유가별 채소 가격 변동"
@@ -54,9 +55,22 @@ class GraphViewController : UIViewController{
     var FoodList : [String] = ["오이" , "양파", "파", "쌀", "호박"]
     var KindList : [String] = ["취청50개", "가시계통(1kg)", "다다기계통(100개"]
     var RankList : [String] = ["중품", "상품"]
-    var ElementList : [String] = ["평균 기온", "평균 습도", "강수량", "평균 풍량", "일조량"]
+    var ElementList : [String]!
     
     var type : Int = 0
+    
+    var xData : [Double] = [1,2,3,4,5,6,7,8,9,10]
+    var yData : [Double] = [12,43,21,24,53,63,14,23,45,36]
+    var yData2 : [Double] = [7250, 6939,6886,3424,6053,7424,7245,2327,1346,4424]//면적
+    var yData3 : [Double] = [1132,1235.8,1126, 1186, 1267, 1797, 1978, 2012, 2345]//평균가
+    
+    var xLabel : String = "평균 유가"
+    var yLabel : String = "채소 평균가"
+    
+    var yLabel2 : String = "면적"
+    var yLabel3 : String = "평균가"
+    
+    var LineGraph : LineChartView!
     
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
@@ -122,7 +136,12 @@ class GraphViewController : UIViewController{
         RankTitleLabel.textAlignment = .center
         RankTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         
-        ElementTitleLabel.text = "날씨 요소"
+        if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
+            ElementTitleLabel.text = "날씨 요소"
+        } else if selectItem == "기타 요인에 따른 채소 가격 변동"{
+            ElementTitleLabel.text = "기타 요인"
+        }
+        
         ElementTitleLabel.textAlignment = .center
         ElementTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         
@@ -135,6 +154,10 @@ class GraphViewController : UIViewController{
     
     @objc func onPress() {
         print("Search click")
+        if LineGraph != nil {
+            LineGraph.removeFromSuperview()
+        }
+        setLineChart()
     }
     
     func makeConstraintsType(type : Int){
@@ -160,6 +183,11 @@ class GraphViewController : UIViewController{
             Cellheight = 1 / 3
         }
         
+        let borderWidth : CGFloat = 0.2
+        let borderColor : CGColor = UIColor.lightGray.cgColor
+        
+        ItemTitleLabel.layer.borderWidth = borderWidth
+        ItemTitleLabel.layer.borderColor = borderColor
         ItemTitleLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.25)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -167,13 +195,17 @@ class GraphViewController : UIViewController{
             make.top.equalToSuperview()
         }
         
+        ItemEditText.layer.borderWidth = borderWidth
+        ItemEditText.layer.borderColor = borderColor
         ItemEditText.snp.makeConstraints{ make in
-            make.width.equalToSuperview().multipliedBy(0.7)
+            make.width.equalToSuperview().multipliedBy(0.75)
             make.height.equalToSuperview().multipliedBy(Cellheight)
             make.leading.equalTo(ItemTitleLabel.snp.trailing)
             make.top.equalTo(ItemTitleLabel.snp.top)
         }
         
+        FoodTitleLabel.layer.borderWidth = borderWidth
+        FoodTitleLabel.layer.borderColor = borderColor
         FoodTitleLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.15)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -181,6 +213,8 @@ class GraphViewController : UIViewController{
             make.top.equalTo(ItemEditText.snp.bottom)
         }
         
+        FoodEditText.layer.borderWidth = borderWidth
+        FoodEditText.layer.borderColor = borderColor
         FoodEditText.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.10)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -188,6 +222,8 @@ class GraphViewController : UIViewController{
             make.top.equalTo(ItemEditText.snp.bottom)
         }
         
+        KindTitleLabel.layer.borderWidth = borderWidth
+        KindTitleLabel.layer.borderColor = borderColor
         KindTitleLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.15)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -195,6 +231,8 @@ class GraphViewController : UIViewController{
             make.top.equalTo(ItemEditText.snp.bottom)
         }
         
+        KindEditText.layer.borderWidth = borderWidth
+        KindEditText.layer.borderColor = borderColor
         KindEditText.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.30)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -202,6 +240,8 @@ class GraphViewController : UIViewController{
             make.top.equalTo(ItemEditText.snp.bottom)
         }
         
+        RankTitleLabel.layer.borderWidth = borderWidth
+        RankTitleLabel.layer.borderColor = borderColor
         RankTitleLabel.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.15)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -209,6 +249,8 @@ class GraphViewController : UIViewController{
             make.top.equalTo(ItemEditText.snp.bottom)
         }
         
+        RankEditText.layer.borderWidth = borderWidth
+        RankEditText.layer.borderColor = borderColor
         RankEditText.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.15)
             make.height.equalToSuperview().multipliedBy(Cellheight)
@@ -217,15 +259,19 @@ class GraphViewController : UIViewController{
         }
         
         if type == 1{
+            ElementTitleLabel.layer.borderWidth = borderWidth
+            ElementTitleLabel.layer.borderColor = borderColor
             ElementTitleLabel.snp.makeConstraints{ make in
-                make.width.equalToSuperview().multipliedBy(0.5)
+                make.width.equalToSuperview().multipliedBy(0.4)
                 make.height.equalToSuperview().multipliedBy(Cellheight)
                 make.leading.equalToSuperview()
                 make.top.equalTo(RankEditText.snp.bottom)
             }
             
+            ElementEditText.layer.borderWidth = borderWidth
+            ElementEditText.layer.borderColor = borderColor
             ElementEditText.snp.makeConstraints{ make in
-                make.width.equalToSuperview().multipliedBy(0.4)
+                make.width.equalToSuperview().multipliedBy(0.6)
                 make.height.equalToSuperview().multipliedBy(Cellheight)
                 make.leading.equalTo(ElementTitleLabel.snp.trailing)
                 make.top.equalTo(RankEditText.snp.bottom)
@@ -275,16 +321,41 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         ItemEditText.text = selectItem
         
         SettingView.removeFromSuperview()
-        
-        if selectItem == "유가별 채소 가격 변동" || selectItem == "연도별 채소 생산량" || selectItem == "기온 및 습도에 따른 채소 가격 변동"{
+        if LineGraph != nil {
+            LineGraph.removeFromSuperview()
+        }
+        if selectItem == "유가별 채소 가격 변동" || selectItem == "연도별 채소 생산량,면적,평균가" {
             InitUI()
             addPickerViewType(type: 0)
             makeConstraintsType(type : 0)
+            
+            if selectItem == "유가별 채소 가격 변동"{
+                xLabel = "평균 유가"
+                yLabel = "채소 평균가"
+            } else if selectItem == "연도별 채소 생산량,면적,평균가"{
+                xLabel = "생산 연도"
+                yLabel = "생산량"
+            }
         }
-        else if selectItem == "곡물 및 식량물가에 따른 채소 가격 변동"{
+        else if selectItem == "기온 및 습도에 따른 채소 가격 변동" || selectItem == "기타 요인에 따른 채소 가격 변동" {
             InitUI()
             addPickerViewType(type: 1)
             makeConstraintsType(type : 1)
+            if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
+                ElementList = ["평균 기온", "평균 습도", "강수량", "평균 풍량", "일조량"]
+            }else {
+                ElementList = ["곡물 및 식량작물", "채소 및 과실", "식료품", "음료품", "비료 및 농약",
+                               "농업 및 건설용 기계", "기타 운송 장비", "전력 가스 및 증기", "수도 폐기물 처리 및 재활용 서비스", "음식점 및 숙박 서비스", "장비 용품 및 지식 재산권 임대"]
+            }
+            ElementEditText.text = ElementList[0]
+            
+            if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
+                xLabel = "평균 기온"
+                yLabel = "채소 평균가"
+            } else if selectItem == "기타 요인에 따른 채소 가격 변동"{
+                xLabel = "곡물 및 식량작물"
+                yLabel = "채소 평균가"
+            }
         }
         
         ItemEditText.resignFirstResponder()
@@ -510,13 +581,19 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         ElementEditText.inputAccessoryView = ElementToolbar
         ElementEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         ElementEditText.textAlignment = .center
-        ElementEditText.text = ElementList[0]
         ElementEditText.textColor = .systemBlue
     }
     
     @objc func onElementPickDone() {
         ElementEditText.text = selectElement
         ElementEditText.resignFirstResponder()
+        
+        if selectItem == "기타 요인에 따른 채소 가격 변동"{
+            xLabel = selectElement
+        } else if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
+            xLabel = selectElement
+        }
+        
     }
 
     // 피커뷰 > 취소 클릭
