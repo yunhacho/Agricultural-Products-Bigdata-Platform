@@ -43,6 +43,7 @@ class FoodCompareViewController : UIViewController{
     
     func addView(){
         self.view.addSubview(SettingView)
+        self.view.isUserInteractionEnabled = true
         
         SettingView.addSubview(DateTitleLabel)
         SettingView.addSubview(DateEditText)
@@ -50,11 +51,11 @@ class FoodCompareViewController : UIViewController{
         SettingView.addSubview(ItemTitleLabel)
         SettingView.addSubview(ItemEditText)
         
-        SettingView.addSubview(SearchBtn)
+        self.view.addSubview(SearchBtn)
     }
     
     func InitUI(){
-        SettingView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
+        SettingView = UIView()
         SettingView.isUserInteractionEnabled = true
         SettingView.layer.borderWidth = 1
         SettingView.layer.borderColor = UIColor.lightGray.cgColor
@@ -64,6 +65,19 @@ class FoodCompareViewController : UIViewController{
         
         ItemTitleLabel.text = "품목"
         ItemTitleLabel.textAlignment = .center
+        
+//        let config = UIImage.SymbolConfiguration(pointSize: 28, weight: .medium, scale: .default)
+//        let systemImage = UIImage(systemName: "magnifyingglass", withConfiguration: config )
+//
+        SearchBtn.setTitle("검색하기", for: .normal)
+        SearchBtn.setTitleColor(UIColor.white, for: .normal)
+        SearchBtn.backgroundColor = .systemBlue
+        SearchBtn.isUserInteractionEnabled = true
+        SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
+    }
+    
+    @objc func onPress() {
+        print("Search click")
     }
 
     func makeConstraints(){
@@ -71,7 +85,7 @@ class FoodCompareViewController : UIViewController{
         SettingView.snp.makeConstraints{ make in
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.075)
-            make.left.right.bottom.top.equalTo(0)
+            make.left.right.top.equalTo(0)
         }
         
         let Cellheight : Double = 1
@@ -91,27 +105,28 @@ class FoodCompareViewController : UIViewController{
         }
         
         ItemTitleLabel.snp.makeConstraints{ make in
-            make.width.equalToSuperview().multipliedBy(0.2)
+            make.width.equalToSuperview().multipliedBy(0.3)
             make.height.equalToSuperview().multipliedBy(Cellheight)
             make.leading.equalTo(DateEditText.snp.trailing)
             make.top.equalTo(DateTitleLabel.snp.top)
         }
         
         ItemEditText.snp.makeConstraints{ make in
-            make.width.equalToSuperview().multipliedBy(0.2)
+            make.width.equalToSuperview().multipliedBy(0.25)
             make.height.equalToSuperview().multipliedBy(Cellheight)
             make.leading.equalTo(ItemTitleLabel.snp.trailing)
             make.top.equalTo(DateTitleLabel.snp.top)
         }
         
-        SearchBtn.backgroundColor = .green
         SearchBtn.snp.makeConstraints{ make in
-            make.width.equalToSuperview().multipliedBy(0.15)
-            make.height.equalToSuperview().multipliedBy(Cellheight)
-            make.leading.equalTo(ItemEditText.snp.trailing)
-            make.top.equalTo(DateTitleLabel.snp.top)
+            make.width.equalToSuperview().multipliedBy(1)
+            make.height.equalTo(ItemEditText.snp.height).multipliedBy(0.7)
+            make.leading.equalToSuperview()
+            make.top.equalTo(SettingView.snp.bottom)
         }
     }
+    
+
     
 }
 
@@ -236,3 +251,4 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
     }
     
 }
+

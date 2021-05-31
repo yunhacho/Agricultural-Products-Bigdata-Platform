@@ -39,6 +39,8 @@ class DateSearchViewController : UIViewController{
     var selectStartDate = ""
     var selectEndDate = ""
     
+    let SearchBtn = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
         InitUI()
@@ -51,7 +53,7 @@ class DateSearchViewController : UIViewController{
     
     func addView(){
         self.view.addSubview(SettingView)
-        
+    
         SettingView.addSubview(DateTitleLabel)
         SettingView.addSubview(StartDateEditText)
         SettingView.addSubview(SlashUILabel)
@@ -59,6 +61,8 @@ class DateSearchViewController : UIViewController{
         
         SettingView.addSubview(ItemTitleLabel)
         SettingView.addSubview(ItemEditText)
+        
+        self.view.addSubview(SearchBtn)
     }
     
     func InitUI(){
@@ -75,8 +79,18 @@ class DateSearchViewController : UIViewController{
         
         SlashUILabel.text = "-"
         SlashUILabel.textAlignment = .center
+        
+        SearchBtn.setTitle("검색하기", for: .normal)
+        SearchBtn.setTitleColor(UIColor.white, for: .normal)
+        SearchBtn.backgroundColor = .systemBlue
+        SearchBtn.isUserInteractionEnabled = true
+        SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
     }
 
+    @objc func onPress() {
+        print("Search click")
+    }
+    
     func makeConstraints(){
 
         SettingView.snp.makeConstraints{ make in
@@ -128,6 +142,13 @@ class DateSearchViewController : UIViewController{
             make.height.equalToSuperview().multipliedBy(Cellheight)
             make.leading.equalTo(ItemTitleLabel.snp.trailing)
             make.top.equalTo(DateTitleLabel.snp.top)
+        }
+        
+        SearchBtn.snp.makeConstraints{ make in
+            make.width.equalToSuperview().multipliedBy(1)
+            make.height.equalTo(ItemEditText.snp.height).multipliedBy(0.7)
+            make.leading.equalToSuperview()
+            make.top.equalTo(SettingView.snp.bottom)
         }
     }
     
