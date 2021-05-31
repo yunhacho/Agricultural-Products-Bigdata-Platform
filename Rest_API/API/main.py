@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
+# In[1]:
 
 
 import sys
@@ -46,12 +46,46 @@ import import_ipynb
 from hello import HelloWorld
 from make_table import CreateEveryday, CreateMonth, CreateYear
 
-CreateEveryday()    #### 하루에 한번씩
-CreateMonth()     #### 달에 한번씩
-CreateYear()     #### 년에 한번씩
+
+## 처음 서버 시작할 때 (main.py 돌릴 때) 모든 테이블 일괄 생성
+
+CreateEveryday()    
+CreateMonth()     
+CreateYear()    
 
 
 # In[4]:
+
+
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask
+import datetime
+
+sched = BackgroundScheduler(daemon=True)
+
+# 매일 00시 00분에 실행
+@sched.scheduled_job('cron', hour='00', minute='00', id='job_1')
+def job1():
+    CreateEveryday()   #### 하루에 한번씩
+
+# 매월 1일 00시 00분에 실행
+@sched.scheduled_job('cron', hour='00', minute='00', id='job_2')
+def job2():
+    if datetime.datetime.now().day != 1:
+        return
+    CreateMonth()   #### 달에 한번씩
+    
+# 1월 1일 00시 00분에 실행
+@sched.scheduled_job('cron', hour='00', minute='00', id='job_3')
+def job3():
+    if (datetime.datetime.now().month != 1) or (datetime.datetime.now().day != 1):
+        return
+    CreateYear()  #### 년에 한번씩
+
+sched.start()
+
+
+# In[ ]:
 
 
 from show_price import ShowPriceDaysBefore, ShowPricePeriod, ShowPriceThisDay
@@ -76,4 +110,10 @@ api.add_resource(ShowPricePredict, '/predict')
 
 if __name__ == '__main__':
     app.run()
+
+
+# In[ ]:
+
+
+
 
