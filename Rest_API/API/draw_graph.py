@@ -20,20 +20,6 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()     #기존에 열려있는 session가져오기
 
 
-# In[3]:
-
-
-
-
-
-
-
-########################### 테스트 및 create table에서 table가져오기 ###################################
-
-
-
-
-
 # In[4]:
 
 
@@ -185,17 +171,81 @@ def priceIndex_avgPrice(item, kind, rank, element):
     return priceIndex_avgPrice_graph_dict[item][kind][rank][element]
 
 
-## test ##
-def clean_avgPrice(item, kind, rank, element):
-    if priceIndex_avgPrice_graph_dict[item][kind][rank][element]!=[]:
-        priceIndex_avgPrice_graph_dict[item][kind][rank][element] = []
-    if weather_avgPrice_graph_dict[item][kind][rank][element]!=[]:
-        weather_avgPrice_graph_dict[item][kind][rank][element] = []
-    else:
-        print("empty!")
+# ## test ##
+# def clean_avgPrice(item, kind, rank, element):
+#     if priceIndex_avgPrice_graph_dict[item][kind][rank][element]!=[]:
+#         priceIndex_avgPrice_graph_dict[item][kind][rank][element] = []
+#     if weather_avgPrice_graph_dict[item][kind][rank][element]!=[]:
+#         weather_avgPrice_graph_dict[item][kind][rank][element] = []
+#     else:
+#         print("empty!")
 
 
 # In[10]:
+
+
+import datetime
+import time
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask
+
+sched = BackgroundScheduler(daemon=True)
+
+# 1월 1일 00시 00분에 실행
+@sched.scheduled_job('cron', hour='00', minute='00', id='job_4')
+def job4():
+    if (datetime.datetime.now().month != 1) or (datetime.datetime.now().day != 1):
+        return
+    
+    ##### 유가와 평균가격 그래프 초기화
+    oil_avgPrice_graph_dict = {'오이':{'취청(50개)':{'중품':[],'상품':[]}, '가시계통(1kg)':{'중품':[],'상품':[]}, '다다기계통(100개)':{'중품':[],'상품':[]}},
+                           '양파':{'햇양파(1kg)':{'중품':[],'상품':[]},'양파(1kg)':{'중품':[],'상품':[]},'수입(1kg)':{'중품':[],'상품':[]}},
+                           '파':{'대파(1kg)':{'중품':[],'상품':[]}, '쪽파(1kg)':{'중품':[],'상품':[]}},
+                           '호박':{'애호박(20개)':{'중품':[],'상품':[]}, '쥬키니(1kg)':{'중품':[],'상품':[]}},
+                           '쌀': {'일반계(1kg)':{'중품':[],'상품':[]}, '햇일반계(1kg)':{'중품':[],'상품':[]}}}
+    
+    
+    
+    ##### 연간 생산량, 면적 그래프 초기화 
+    year_production_area_price_graph_dict = {'오이':{'취청(50개)':{'중품':[],'상품':[]}, '가시계통(1kg)':{'중품':[],'상품':[]}, '다다기계통(100개)':{'중품':[],'상품':[]}},
+                           '양파':{'햇양파(1kg)':{'중품':[],'상품':[]},'양파(1kg)':{'중품':[],'상품':[]},'수입(1kg)':{'중품':[],'상품':[]}},
+                           '파':{'대파(1kg)':{'중품':[],'상품':[]}, '쪽파(1kg)':{'중품':[],'상품':[]}},
+                           '호박':{'애호박(20개)':{'중품':[],'상품':[]}, '쥬키니(1kg)':{'중품':[],'상품':[]}},
+                           '쌀': {'일반계(1kg)':{'중품':[],'상품':[]}, '햇일반계(1kg)':{'중품':[],'상품':[]}}}
+    
+    
+    ##### 날씨와 평균가격 그래프 초기화
+    weather_avgPrice_graph_dict = {'오이':{'취청(50개)':{'중품':{},'상품':{}}, '가시계통(1kg)':{'중품':{},'상품':{}}, '다다기계통(100개)':{'중품':{},'상품':{}}},
+                           '양파':{'햇양파(1kg)':{'중품':{},'상품':{}},'양파(1kg)':{'중품':{},'상품':{}},'수입(1kg)':{'중품':{},'상품':{}}},
+                           '파':{'대파(1kg)':{'중품':{},'상품':{}}, '쪽파(1kg)':{'중품':{},'상품':{}}},
+                           '호박':{'애호박(20개)':{'중품':{},'상품':{}}, '쥬키니(1kg)':{'중품':{},'상품':{}}},
+                           '쌀': {'일반계(1kg)':{'중품':{},'상품':{}}, '햇일반계(1kg)':{'중품':{},'상품':{}}}}
+
+    
+    for item in crops_dict.keys():
+        for kind in crops_dict[item][0]:
+            for rank in crops_dict[item][1]:
+                weather_avgPrice_graph_dict[item][kind][rank]={i:[] for i in weather_element_list}
+                
+                
+    ##### 물가와 평균가격 그래프 초기화     
+    priceIndex_avgPrice_graph_dict = {'오이':{'취청(50개)':{'중품':{},'상품':{}}, '가시계통(1kg)':{'중품':{},'상품':{}}, '다다기계통(100개)':{'중품':{},'상품':{}}},
+                           '양파':{'햇양파(1kg)':{'중품':{},'상품':{}},'양파(1kg)':{'중품':{},'상품':{}},'수입(1kg)':{'중품':{},'상품':{}}},
+                           '파':{'대파(1kg)':{'중품':{},'상품':{}}, '쪽파(1kg)':{'중품':{},'상품':{}}},
+                           '호박':{'애호박(20개)':{'중품':{},'상품':{}}, '쥬키니(1kg)':{'중품':{},'상품':{}}},
+                           '쌀': {'일반계(1kg)':{'중품':{},'상품':{}}, '햇일반계(1kg)':{'중품':{},'상품':{}}}}
+
+
+    for item in crops_dict.keys():
+        for kind in crops_dict[item][0]:
+            for rank in crops_dict[item][1]:
+                priceIndex_avgPrice_graph_dict[item][kind][rank]={i:[] for i in priceIndex_element_list}
+
+
+sched.start()
+
+
+# In[11]:
 
 
 
