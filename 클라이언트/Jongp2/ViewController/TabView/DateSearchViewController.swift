@@ -32,10 +32,11 @@ class DateSearchViewController : UIViewController{
     let EndDatePicker = UIDatePicker()
     let EndDateToolbar = UIToolbar()
     
-    let ItemNames = ["오이" , "양파", "파", "쌀", "호박"]
+    let ItemNames = ["오이" , "양파", "파", "호박", "쌀"]
+    let ItemDict : [String : Int] = ["오이" : 0, "양파" : 1, "파" : 2, "호박" : 3, "쌀" : 4]
     var Item = "오이"
     
-    var selectItem = ""
+    var selectItem = "오이"
     var selectStartDate = ""
     var selectEndDate = ""
     
@@ -50,17 +51,18 @@ class DateSearchViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
-        InitUI()
-        addView()
-        makeConstraints()
+        self.InitUI()
+        self.addView()
+        self.makeConstraints()
         
-        InitItemPicker()
-        InitStartDatePicker()
-        InitEndDatePicker()
+        self.InitItemPicker()
         
-        InitTitle()
-        initFoodContents()
-        tableViewSetting(width: self.view.frame.width, height: self.view.frame.height * 0.3)
+        self.InitDate()
+        self.InitStartDatePicker()
+        self.InitEndDatePicker()
+        
+        self.InitTitle()
+        getFoodTable(item: ItemDict[selectItem]!, startDate: selectStartDate, endDate: selectEndDate)
     }
     
     func addView(){
@@ -87,29 +89,29 @@ class DateSearchViewController : UIViewController{
         
         DateTitleLabel.text = "기간"
         DateTitleLabel.textAlignment = .center
-        DateTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        DateTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         ItemTitleLabel.text = "품목"
         ItemTitleLabel.textAlignment = .center
-        DateTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        ItemTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         SlashUILabel.text = "-"
         SlashUILabel.textAlignment = .center
         
         SearchBtn.setTitle("검색하기", for: .normal)
-        SearchBtn.setTitleColor(UIColor.white, for: .normal)
-        SearchBtn.backgroundColor = .systemBlue
+        SearchBtn.setTitleColor(UIColor.black, for: .normal)
+        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(0.3)
         SearchBtn.isUserInteractionEnabled = true
         SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
     }
 
     @objc func onPress() {
         print("Search click")
+        getFoodTable(item: ItemDict[selectItem]!, startDate: selectStartDate, endDate: selectEndDate)
     }
     
     func InitTitle(){
         FoodTitleLabel.layer.borderWidth = 0.5
-        
         
         let nameLabel = UILabel()
         let kindLabel = UILabel()
@@ -118,19 +120,19 @@ class DateSearchViewController : UIViewController{
         
         nameLabel.text = "품목명(등급)"
         nameLabel.textAlignment = .center
-        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        nameLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         kindLabel.text = "종류"
         kindLabel.textAlignment = .center
-        kindLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        kindLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         priceLabel.text = "가격"
         priceLabel.textAlignment = .center
-        priceLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        priceLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         unitLabel.text = "무게/개수"
         unitLabel.textAlignment = .center
-        unitLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        unitLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         FoodTitleLabel.addSubview(nameLabel)
         FoodTitleLabel.addSubview(kindLabel)
@@ -256,7 +258,7 @@ class DateSearchViewController : UIViewController{
     
     func initFoodContents(){
         for _ in 0..<10{
-            FoodContents.append(FoodContent(item_name: "오이", kind_name: "다다기계통(100개)", rank: "상품", price: 123450, unit: "10Kg", timeStamp: "2019-04-19"))
+            FoodContents.append(FoodContent(item_name: "오이", kind_name: "다다기계통(100개)", rank: "상품", price: 123450, unit: "10Kg", timestamp: "2019-04-19"))
         }
     }
     
@@ -279,7 +281,7 @@ extension DateSearchViewController : UITableViewDataSource{
             numberFormatter.numberStyle = .decimal
             cell.priceLabel.text = numberFormatter.string(for: FoodContents[indexPath.row].price)!
             cell.unitLabel.text = FoodContents[indexPath.row].unit
-            cell.timestampLabel.text = FoodContents[indexPath.row].timeStamp
+            cell.timestampLabel.text = FoodContents[indexPath.row].timestamp
             
             return cell
         }
@@ -320,7 +322,8 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         ItemEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         ItemEditText.textAlignment = .center
         ItemEditText.text = ItemNames[0]
-        ItemEditText.textColor = .systemBlue
+        ItemEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     @objc func onItemPickDone() {
@@ -365,8 +368,8 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         let date = dateformatter.string(from: StartDatePicker.date)
         
         StartDateEditText.text = date
-        StartDateEditText.textColor = .systemBlue
-        
+        StartDateEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        StartDateEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     func InitEndDatePicker(){
@@ -401,8 +404,8 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         let date = dateformatter.string(from: EndDatePicker.date)
         
         EndDateEditText.text = date
-        EndDateEditText.textColor = .systemBlue
-        
+        EndDateEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        EndDateEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     @objc func changed(){
@@ -414,8 +417,11 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
     @objc func onStartDatePickDone() {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy/MM/dd"
+        StartDateEditText.text = dateformatter.string(from: StartDatePicker.date)
+        
+        dateformatter.dateFormat = "yyyyMMdd"
         selectStartDate = dateformatter.string(from: StartDatePicker.date)
-        StartDateEditText.text = selectStartDate
+        
         StartDateEditText.resignFirstResponder()
     }
 
@@ -426,11 +432,24 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
     @objc func onEndDatePickDone() {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy/MM/dd"
+        EndDateEditText.text = dateformatter.string(from: EndDatePicker.date)
+        
+        dateformatter.dateFormat = "yyyyMMdd"
         selectEndDate = dateformatter.string(from: EndDatePicker.date)
-        EndDateEditText.text = selectEndDate
+        
         EndDateEditText.resignFirstResponder()
     }
 
+    func InitDate(){
+        
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        let date = dateformatter.string(from: EndDatePicker.date)
+        
+        selectStartDate = date
+        selectEndDate = date
+    }
+    
     @objc func onEndDatePickCancel() {
         StartDateEditText.resignFirstResponder() // 피커뷰를 내림 (텍스트필드가 responder 상태를 읽음)
     }
@@ -466,3 +485,26 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
     
 }
 
+extension DateSearchViewController{
+    func getFoodTable(item : Int, startDate : String, endDate : String){
+        var url : String!
+        
+        if selectStartDate == selectEndDate{
+            url = "\(WasURL.getURL(url:requestURL.this_day))?item=\(item)&date=\(selectStartDate)"
+        } else{
+            url = "\(WasURL.getURL(url:requestURL.period))?item=\(item)&date1=\(selectStartDate)&date2=\(selectEndDate)"
+        }
+            
+        getBeforeFood(url : url ){ [weak self] result in
+            for i in 0..<result.count{
+                self?.FoodContents.append(FoodContent(item_name: result[i].item_name, kind_name: result[i].kind_name, rank: result[i].rank, price: result[i].price, unit: result[i].unit, timestamp: result[i].timestamp))
+            }
+            
+            DispatchQueue.main.async {
+               
+                //self?.initFoodContents()
+                self?.tableViewSetting(width: (self?.view.frame.width)!, height: (self?.view.frame.height)! * 0.3)
+            }
+        }
+    }
+}

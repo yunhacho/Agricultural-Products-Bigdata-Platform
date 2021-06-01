@@ -27,6 +27,10 @@ class FirstTabController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tabBarController?.tabBar.tintColor = UIColor.init(rgb: ColorSetting.backgroundColor)
+        self.tabBarController?.tabBar.unselectedItemTintColor = .black
+        
         initValue()
         
         InitTabview()
@@ -45,7 +49,6 @@ class FirstTabController: UIViewController {
         selectStoryBoard = UIStoryboard(name: "FirstTab", bundle: nil)
         contentView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height * 0.78))
         contentView.isUserInteractionEnabled = true
-      
     }
     
     func InitTabview(){

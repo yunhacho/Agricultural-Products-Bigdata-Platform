@@ -1,26 +1,38 @@
 PODS:
+  - Alamofire (5.4.3)
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
   - DropDown (2.3.13)
   - SnapKit (5.0.1)
+  - SocketRocket (0.5.1)
+  - StompClientLib (1.4.1):
+    - SocketRocket
 
 DEPENDENCIES:
+  - Alamofire
   - Charts
   - DropDown
   - SnapKit
+  - StompClientLib
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Charts
     - DropDown
     - SnapKit
+    - SocketRocket
+    - StompClientLib
 
 SPEC CHECKSUMS:
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
+  StompClientLib: ac40390e9660c574675f1c933bec81c8e2811a4f
 
-PODFILE CHECKSUM: 335a6c6051910cab3fd1a5a2550789b3209e9143
+PODFILE CHECKSUM: 601a77c2669413ceedb0875df8459686558fcf82
 
 COCOAPODS: 1.10.1

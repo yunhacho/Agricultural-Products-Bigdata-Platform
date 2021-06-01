@@ -21,7 +21,7 @@
 		682ECB752663D93300F02DD3 /* FirstTabTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB742663D93300F02DD3 /* FirstTabTableController.swift */; };
 		682ECB772663DB8A00F02DD3 /* FoodCompareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB762663DB8900F02DD3 /* FoodCompareViewController.swift */; };
 		682ECB792663DBAA00F02DD3 /* FoodCompare.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 682ECB782663DBAA00F02DD3 /* FoodCompare.storyboard */; };
-		682ECB7B2663DF1900F02DD3 /* TabBarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB7A2663DF1900F02DD3 /* TabBarCollectionView.swift */; };
+		682ECB7B2663DF1900F02DD3 /* TabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB7A2663DF1900F02DD3 /* TabBarCell.swift */; };
 		682ECB7D2663F7ED00F02DD3 /* FirstTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 682ECB7C2663F7ED00F02DD3 /* FirstTab.storyboard */; };
 		682ECB802664056B00F02DD3 /* DateSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB7F2664056A00F02DD3 /* DateSearchViewController.swift */; };
 		682ECB822664057B00F02DD3 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB812664057B00F02DD3 /* GraphViewController.swift */; };
@@ -31,6 +31,10 @@
 		682ECB8B266405EE00F02DD3 /* PredictPrice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 682ECB8A266405EE00F02DD3 /* PredictPrice.storyboard */; };
 		682ECB8D266528DE00F02DD3 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB8C266528DC00F02DD3 /* FoodCell.swift */; };
 		682ECB8F2665643000F02DD3 /* GraphViewExtenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB8E2665642F00F02DD3 /* GraphViewExtenstion.swift */; };
+		682ECB9226664F3900F02DD3 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB9126664F3900F02DD3 /* UIColor.swift */; };
+		682ECB952666590900F02DD3 /* ColorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB942666590900F02DD3 /* ColorTable.swift */; };
+		682ECBAA26667E7300F02DD3 /* AuctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECBA926667E7100F02DD3 /* AuctionCell.swift */; };
+		682ECBAC2666BBBF00F02DD3 /* request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECBAB2666BBBE00F02DD3 /* request.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +54,7 @@
 		682ECB742663D93300F02DD3 /* FirstTabTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTabTableController.swift; sourceTree = "<group>"; };
 		682ECB762663DB8900F02DD3 /* FoodCompareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCompareViewController.swift; sourceTree = "<group>"; };
 		682ECB782663DBAA00F02DD3 /* FoodCompare.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FoodCompare.storyboard; sourceTree = "<group>"; };
-		682ECB7A2663DF1900F02DD3 /* TabBarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCollectionView.swift; sourceTree = "<group>"; };
+		682ECB7A2663DF1900F02DD3 /* TabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCell.swift; sourceTree = "<group>"; };
 		682ECB7C2663F7ED00F02DD3 /* FirstTab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FirstTab.storyboard; sourceTree = "<group>"; };
 		682ECB7F2664056A00F02DD3 /* DateSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSearchViewController.swift; sourceTree = "<group>"; };
 		682ECB812664057B00F02DD3 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +64,10 @@
 		682ECB8A266405EE00F02DD3 /* PredictPrice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PredictPrice.storyboard; sourceTree = "<group>"; };
 		682ECB8C266528DC00F02DD3 /* FoodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
 		682ECB8E2665642F00F02DD3 /* GraphViewExtenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewExtenstion.swift; sourceTree = "<group>"; };
+		682ECB9126664F3900F02DD3 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		682ECB942666590900F02DD3 /* ColorTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTable.swift; sourceTree = "<group>"; };
+		682ECBA926667E7100F02DD3 /* AuctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionCell.swift; sourceTree = "<group>"; };
+		682ECBAB2666BBBE00F02DD3 /* request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = request.swift; sourceTree = "<group>"; };
 		993BCA4680CBB609DC481C21 /* Pods_Jongp2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jongp2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE79E3EF6CFC6A7CB4CAF233 /* Pods-Jongp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jongp2.release.xcconfig"; path = "Target Support Files/Pods-Jongp2/Pods-Jongp2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,9 +105,7 @@
 		682ECB522663CDAE00F02DD3 /* Jongp2 */ = {
 			isa = PBXGroup;
 			children = (
-				682ECB712663D78000F02DD3 /* API */,
 				682ECB6C2663D08100F02DD3 /* ViewController */,
-				682ECB692663D06A00F02DD3 /* StoryBoard */,
 				682ECB532663CDAE00F02DD3 /* AppDelegate.swift */,
 				682ECB552663CDAE00F02DD3 /* SceneDelegate.swift */,
 				682ECB5C2663CDB700F02DD3 /* Assets.xcassets */,
@@ -126,12 +132,15 @@
 		682ECB6C2663D08100F02DD3 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				682ECB712663D78000F02DD3 /* API */,
+				682ECB9026664F2500F02DD3 /* Color */,
+				682ECB9326664F6000F02DD3 /* Cell */,
 				682ECB7E2664011D00F02DD3 /* TabView */,
+				682ECB692663D06A00F02DD3 /* StoryBoard */,
 				682ECB572663CDAE00F02DD3 /* ViewController.swift */,
 				682ECB6D2663D09900F02DD3 /* FirstTabController.swift */,
 				682ECB742663D93300F02DD3 /* FirstTabTableController.swift */,
 				682ECB6F2663D0A500F02DD3 /* SecondTabController.swift */,
-				682ECB7A2663DF1900F02DD3 /* TabBarCollectionView.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -140,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				682ECB722663D79100F02DD3 /* WasURL.swift */,
+				682ECBAB2666BBBE00F02DD3 /* request.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -152,9 +162,27 @@
 				682ECB812664057B00F02DD3 /* GraphViewController.swift */,
 				682ECB8E2665642F00F02DD3 /* GraphViewExtenstion.swift */,
 				682ECB832664058600F02DD3 /* PredictPriceViewController.swift */,
-				682ECB8C266528DC00F02DD3 /* FoodCell.swift */,
 			);
 			path = TabView;
+			sourceTree = "<group>";
+		};
+		682ECB9026664F2500F02DD3 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				682ECB9126664F3900F02DD3 /* UIColor.swift */,
+				682ECB942666590900F02DD3 /* ColorTable.swift */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
+		682ECB9326664F6000F02DD3 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				682ECB7A2663DF1900F02DD3 /* TabBarCell.swift */,
+				682ECB8C266528DC00F02DD3 /* FoodCell.swift */,
+				682ECBA926667E7100F02DD3 /* AuctionCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		8DA76959BD08D45A7F149B5C /* Pods */ = {
@@ -294,17 +322,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				682ECBAA26667E7300F02DD3 /* AuctionCell.swift in Sources */,
 				682ECB8F2665643000F02DD3 /* GraphViewExtenstion.swift in Sources */,
 				682ECB802664056B00F02DD3 /* DateSearchViewController.swift in Sources */,
+				682ECB952666590900F02DD3 /* ColorTable.swift in Sources */,
 				682ECB582663CDAE00F02DD3 /* ViewController.swift in Sources */,
 				682ECB542663CDAE00F02DD3 /* AppDelegate.swift in Sources */,
+				682ECB9226664F3900F02DD3 /* UIColor.swift in Sources */,
 				682ECB702663D0A500F02DD3 /* SecondTabController.swift in Sources */,
 				682ECB8D266528DE00F02DD3 /* FoodCell.swift in Sources */,
 				682ECB842664058600F02DD3 /* PredictPriceViewController.swift in Sources */,
 				682ECB772663DB8A00F02DD3 /* FoodCompareViewController.swift in Sources */,
+				682ECBAC2666BBBF00F02DD3 /* request.swift in Sources */,
 				682ECB6E2663D09900F02DD3 /* FirstTabController.swift in Sources */,
 				682ECB562663CDAE00F02DD3 /* SceneDelegate.swift in Sources */,
-				682ECB7B2663DF1900F02DD3 /* TabBarCollectionView.swift in Sources */,
+				682ECB7B2663DF1900F02DD3 /* TabBarCell.swift in Sources */,
 				682ECB822664057B00F02DD3 /* GraphViewController.swift in Sources */,
 				682ECB732663D79100F02DD3 /* WasURL.swift in Sources */,
 				682ECB752663D93300F02DD3 /* FirstTabTableController.swift in Sources */,

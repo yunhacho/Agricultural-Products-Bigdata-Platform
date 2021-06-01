@@ -7,5 +7,7 @@ target 'Jongp2' do
   pod 'SnapKit'
   pod 'Charts'
   pod 'DropDown'
+  pod 'Alamofire'
+  pod 'StompClientLib'
   # Pods for Jongp2
 end

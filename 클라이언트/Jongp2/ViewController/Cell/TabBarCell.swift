@@ -15,11 +15,9 @@ class TabBarCollectionViewCell: UICollectionViewCell {
         titleLabel.text = title
         titleLabel.textAlignment = .center
         self.contentView.addSubview(titleLabel)
-        titleLabel.textColor = .white
-        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        //self.contentView.layer.borderWidth = 1
-        //self.contentView.layer.borderColor = UIColor.gray.cgColor
-        self.backgroundColor = .systemBlue
+        titleLabel.textColor = .black
+        titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        titleLabel.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor ).withAlphaComponent(0.3)
         
         contentView.snp.makeConstraints{ make in
             make.width.equalToSuperview()
@@ -34,11 +32,14 @@ class TabBarCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         willSet {
             if newValue {
+                titleLabel.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(0.6)
                 titleLabel.textColor = .black
-                titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+                titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
             } else {
-                titleLabel.textColor = .white
-                titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+                //titleLabel.backgroundColor = UIColor(red: 255, green: 153, blue: 102, alpha: 1)
+                titleLabel.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(0.3)
+                titleLabel.textColor = .black
+                titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
             }
         }
     }
@@ -47,15 +48,4 @@ class TabBarCollectionViewCell: UICollectionViewCell {
     }
 
 }
-
-class TabPageCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "TabPageCell"
-    lazy var backColor: [UIColor] = [.lightGray, .purple, .orange, .cyan, .magenta]
-    
-    func setColor(index: Int){
-        self.backgroundColor = backColor[index]
-    }
-    
-}
-
 

@@ -72,6 +72,9 @@ class GraphViewController : UIViewController{
     
     var LineGraph : LineChartView!
     
+    let borderWidth : CGFloat = 0.2
+    let borderColor : CGColor = UIColor.lightGray.cgColor
+    
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
         InitUI()
@@ -122,19 +125,19 @@ class GraphViewController : UIViewController{
         
         ItemTitleLabel.text = "그래프"
         ItemTitleLabel.textAlignment = .center
-        ItemTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        ItemTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         FoodTitleLabel.text = "품목"
         FoodTitleLabel.textAlignment = .center
-        FoodTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        FoodTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         KindTitleLabel.text = "종류"
         KindTitleLabel.textAlignment = .center
-        KindTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        KindTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         RankTitleLabel.text = "등급"
         RankTitleLabel.textAlignment = .center
-        RankTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        RankTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
             ElementTitleLabel.text = "날씨 요소"
@@ -143,11 +146,11 @@ class GraphViewController : UIViewController{
         }
         
         ElementTitleLabel.textAlignment = .center
-        ElementTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        ElementTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         SearchBtn.setTitle("확인", for: .normal)
-        SearchBtn.setTitleColor(UIColor.white, for: .normal)
-        SearchBtn.backgroundColor = .systemBlue
+        SearchBtn.setTitleColor(UIColor.black, for: .normal)
+        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(0.3)
         SearchBtn.isUserInteractionEnabled = true
         SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
     }
@@ -182,9 +185,6 @@ class GraphViewController : UIViewController{
         } else if type == 1 {
             Cellheight = 1 / 3
         }
-        
-        let borderWidth : CGFloat = 0.2
-        let borderColor : CGColor = UIColor.lightGray.cgColor
         
         ItemTitleLabel.layer.borderWidth = borderWidth
         ItemTitleLabel.layer.borderColor = borderColor
@@ -314,7 +314,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         ItemEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         ItemEditText.textAlignment = .center
         ItemEditText.text = ItemNames[0]
-        ItemEditText.textColor = .systemBlue
+        ItemEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     @objc func onItemPickDone() {
@@ -451,7 +452,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         FoodEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         FoodEditText.textAlignment = .center
         FoodEditText.text = FoodList[0]
-        FoodEditText.textColor = .systemBlue
+        FoodEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        FoodEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     @objc func onFoodPickDone() {
@@ -510,7 +512,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         KindEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         KindEditText.textAlignment = .center
         KindEditText.text = KindList[0]
-        KindEditText.textColor = .systemBlue
+        KindEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        KindEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     @objc func onKindPickDone() {
@@ -546,7 +549,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         RankEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         RankEditText.textAlignment = .center
         RankEditText.text = RankList[0]
-        RankEditText.textColor = .systemBlue
+        RankEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        RankEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     @objc func onRankPickDone() {
@@ -581,7 +585,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         ElementEditText.inputAccessoryView = ElementToolbar
         ElementEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         ElementEditText.textAlignment = .center
-        ElementEditText.textColor = .systemBlue
+        ElementEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        ElementEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     @objc func onElementPickDone() {

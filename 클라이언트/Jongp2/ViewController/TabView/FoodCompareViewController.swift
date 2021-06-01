@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 import SnapKit
+import Alamofire
+
 
 class FoodCompareViewController : UIViewController{
     
@@ -26,11 +28,12 @@ class FoodCompareViewController : UIViewController{
     
     let SearchBtn = UIButton()
     
-    let ItemNames = ["오이" , "양파", "파", "쌀", "호박"]
+    let ItemNames = ["오이" , "양파", "파", "호박", "쌀"]
+    let ItemDict : [String : Int] = ["오이" : 0, "양파" : 1, "파" : 2, "호박" : 3, "쌀" : 4]
     var Item = "옹"
     
-    var selectItem = ""
-    var selectDate = ""
+    var selectItem = "오이"
+    var selectDate = "20210602"
     
     let FoodTitleLabel = UIView()
     let FoodTableView = UITableView()
@@ -41,17 +44,15 @@ class FoodCompareViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
-        InitUI()
-        addView()
+        self.InitUI()
+        self.addView()
+        self.makeConstraints()
+        self.InitItemPicker()
+        self.InitDate()
+        self.InitDatePicker()
+        self.InitTitle()
         
-        makeConstraints()
-        InitItemPicker()
-        InitDatePicker()
-        
-        
-        InitTitle()
-        initFoodContents()
-        tableViewSetting(width: self.view.frame.width, height: self.view.frame.height * 0.3)
+        getBeforePrice(item : ItemDict[selectItem]!, date : selectDate)
     }
     
     func addView(){
@@ -78,23 +79,24 @@ class FoodCompareViewController : UIViewController{
         
         DateTitleLabel.text = "날짜"
         DateTitleLabel.textAlignment = .center
-        DateTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        DateTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         ItemTitleLabel.text = "품목"
         ItemTitleLabel.textAlignment = .center
-        ItemTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        ItemTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
 //        let config = UIImage.SymbolConfiguration(pointSize: 28, weight: .medium, scale: .default)
 //        let systemImage = UIImage(systemName: "magnifyingglass", withConfiguration: config )
 //
         SearchBtn.setTitle("검색하기", for: .normal)
-        SearchBtn.setTitleColor(UIColor.white, for: .normal)
-        SearchBtn.backgroundColor = .systemBlue
+        SearchBtn.setTitleColor(UIColor.black, for: .normal)
+        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(0.3)
         SearchBtn.isUserInteractionEnabled = true
         SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
     }
     
     @objc func onPress() {
         print("Search click")
+        getBeforePrice(item : ItemDict[selectItem]!, date : selectDate)
     }
     
     func InitTitle(){
@@ -108,19 +110,19 @@ class FoodCompareViewController : UIViewController{
         
         nameLabel.text = "품목명(등급)"
         nameLabel.textAlignment = .center
-        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        nameLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         kindLabel.text = "종류"
         kindLabel.textAlignment = .center
-        kindLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        kindLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         priceLabel.text = "가격"
         priceLabel.textAlignment = .center
-        priceLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        priceLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         unitLabel.text = "무게/개수"
         unitLabel.textAlignment = .center
-        unitLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        unitLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         FoodTitleLabel.addSubview(nameLabel)
         FoodTitleLabel.addSubview(kindLabel)
@@ -233,11 +235,11 @@ class FoodCompareViewController : UIViewController{
         FoodTableView.rowHeight = height * 0.25
     }
     
-    func initFoodContents(){
-        for _ in 0..<10{
-            FoodContents.append(FoodContent(item_name: "오이", kind_name: "다다기계통(100개)", rank: "상품", price: 123450, unit: "10Kg", timeStamp: "2019-04-19"))
-        }
-    }
+//    func initFoodContents(){
+//        for _ in 0..<10{
+//            FoodContents.append(FoodContent(item_name: "오이", kind_name: "다다기계통(100개)", rank: "상품", price: 123450, unit: "10Kg", timeStamp: "2019-04-19"))
+//        }
+//    }
     
 }
 
@@ -258,7 +260,7 @@ extension FoodCompareViewController : UITableViewDataSource{
             numberFormatter.numberStyle = .decimal
             cell.priceLabel.text = numberFormatter.string(for: FoodContents[indexPath.row].price)!
             cell.unitLabel.text = FoodContents[indexPath.row].unit
-            cell.timestampLabel.text = FoodContents[indexPath.row].timeStamp
+            cell.timestampLabel.text = FoodContents[indexPath.row].timestamp
             
             return cell
         }
@@ -299,7 +301,8 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         ItemEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         ItemEditText.textAlignment = .center
         ItemEditText.text = ItemNames[0]
-        ItemEditText.textColor = .systemBlue
+        ItemEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     }
     
     @objc func onItemPickDone() {
@@ -310,6 +313,13 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
     // 피커뷰 > 취소 클릭
     @objc func onItemPickCancel() {
         ItemEditText.resignFirstResponder() // 피커뷰를 내림 (텍스트필드가 responder 상태를 읽음)
+    }
+    
+    func InitDate(){
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        let date = dateformatter.string(from: DatePicker.date)
+        selectDate = date
     }
     
     func InitDatePicker(){
@@ -344,7 +354,8 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         let date = dateformatter.string(from: DatePicker.date)
         
         DateEditText.text = date
-        DateEditText.textColor = .systemBlue
+        DateEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
+        DateEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         
     }
     
@@ -357,8 +368,10 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
     @objc func onDatePickDone() {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy/MM/dd"
+        DateEditText.text = dateformatter.string(from: DatePicker.date)
+        
+        dateformatter.dateFormat = "yyyyMMdd"
         selectDate = dateformatter.string(from: DatePicker.date)
-        DateEditText.text = selectDate
         DateEditText.resignFirstResponder()
     }
 
@@ -396,11 +409,32 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
     
 }
 
-struct FoodContent {
+extension FoodCompareViewController{
+    
+    func getBeforePrice(item : Int, date : String){
+        print("\(WasURL.getURL(url:requestURL.days_before))?item=\(item)&date=\(date)")
+        getBeforeFood(url : "\(WasURL.getURL(url:requestURL.days_before))?item=\(item)&date=\(date)"){ [weak self] result in
+            for i in 0..<result.count{
+                self?.FoodContents.append(FoodContent(item_name: result[i].item_name, kind_name: result[i].kind_name, rank: result[i].rank, price: result[i].price, unit: result[i].unit, timestamp: result[i].timestamp))
+            }
+            
+            DispatchQueue.main.async {
+                self?.tableViewSetting(width: (self?.view.frame.width)!, height: (self?.view.frame.height)! * 0.3)
+            }
+        }
+    }
+    
+}
+
+struct FoodContentList : Codable{
+    let contents : [FoodContent]
+}
+
+struct FoodContent : Codable{
     let item_name : String
     let kind_name : String
     let rank : String
     let price : Int
     let unit : String
-    let timeStamp : String
+    let timestamp : String
 }

@@ -77,27 +77,27 @@ class FoodCell: UITableViewCell {
         
         itemNameLabel.textColor = .black
         itemNameLabel.textAlignment = .center
-        itemNameLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        itemNameLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         
         timestampLabel.textColor = .black
         timestampLabel.textAlignment = .center
-        timestampLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        timestampLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         
         kindLabel.textColor = .black
         kindLabel.textAlignment = .center
-        kindLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        kindLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         
         priceLabel.textColor = .black
         priceLabel.textAlignment = .center
-        priceLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        priceLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         
         rankLabel.textColor = .black
         rankLabel.textAlignment = .center
-        rankLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        rankLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         
         unitLabel.textColor = .black
         unitLabel.textAlignment = .center
-        unitLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        unitLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
     }
     
     required init?(coder aDecoder: NSCoder) {
