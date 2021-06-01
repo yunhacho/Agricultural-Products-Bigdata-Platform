@@ -33,18 +33,18 @@ from datetime import timedelta
 
 
 def CreateEveryday():
-    oil_df = spark.read.orc("../orc/oil") # 매일 업데이트 ******
+    oil_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/oil") # 매일 업데이트 ******
 
-    Pyeongtaek_df = spark.read.orc("../orc/main_area_weather/4122000000") #평택, 오이 (일조량 0)     # 매일 업데이트 *******
-    Anseong_df = spark.read.orc("../orc/main_area_weather/4155000000") #안성, 대파     # 매일 업데이트 *******
-    Chuncheon_df = spark.read.orc("../orc/main_area_weather/4211000000") #춘천, 호박     # 매일 업데이트 *******
-    Jeongeup_df = spark.read.orc("../orc/main_area_weather/4518000000") #정읍, 쌀     # 매일 업데이트 *******
-    Hampyeong_df = spark.read.orc("../orc/main_area_weather/4686000000") #함평, 양파     # 매일 업데이트 *******
-    Sangju_df = spark.read.orc("../orc/main_area_weather/4725000000") #상주, 오이     # 매일 업데이트 *******
-    Gimhae_df = spark.read.orc("../orc/main_area_weather/4825000000") #김해, 대파     # 매일 업데이트 *******
-    Hamyang_df = spark.read.orc("../orc/main_area_weather/4887000000") #함양, 양파     # 매일 업데이트 *******
+    Pyeongtaek_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/main_area_weather/4122000000") #평택, 오이 (일조량 0)     # 매일 업데이트 *******
+    Anseong_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/main_area_weather/4155000000") #안성, 대파     # 매일 업데이트 *******
+    Chuncheon_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/main_area_weather/4211000000") #춘천, 호박     # 매일 업데이트 *******
+    Jeongeup_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/main_area_weather/4518000000") #정읍, 쌀     # 매일 업데이트 *******
+    Hampyeong_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/main_area_weather/4686000000") #함평, 양파     # 매일 업데이트 *******
+    Sangju_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/main_area_weather/4725000000") #상주, 오이     # 매일 업데이트 *******
+    Gimhae_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/main_area_weather/4825000000") #김해, 대파     # 매일 업데이트 *******
+    Hamyang_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/main_area_weather/4887000000") #함양, 양파     # 매일 업데이트 *******
 
-    price_df = spark.read.orc(["../orc/price/KamisDailyPrice_1", "../orc/price/KamisDailyPrice_2", "../orc/price/KamisDailyPrice_3"]) # 매일 업데이트 ********
+    price_df = spark.read.orc(["hdfs://localhost:9000/user/orc/orc/price/KamisDailyPrice_1", "hdfs://localhost:9000/user/orc/orc/price/KamisDailyPrice_2", "../orc/price/KamisDailyPrice_3"]) # 매일 업데이트 ********
 
 
     # 유가 table
@@ -87,7 +87,7 @@ def CreateEveryday():
     
     
 def CreateMonth():
-    priceIndex_df = spark.read.orc("../orc/priceIndex")
+    priceIndex_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/priceIndex")
 
     # 물가 table
     # priceIndex_df.
@@ -98,11 +98,11 @@ def CreateMonth():
     
     
 def CreateYear():
-    riceProduction_df = spark.read.orc("../orc/vege_production/rice")
-    onionProduction_df = spark.read.orc("../orc/vege_production/onion")
-    cucumberProduction_df = spark.read.orc("../orc/vege_production/cucumber")
-    greenOnionProduction_df = spark.read.orc("../orc/vege_production/green_onion")
-    pumpkinProduction_df = spark.read.orc("../orc/vege_production/pumpkin")
+    riceProduction_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/vege_production/rice")
+    onionProduction_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/vege_production/onion")
+    cucumberProduction_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/vege_production/cucumber")
+    greenOnionProduction_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/vege_production/green_onion")
+    pumpkinProduction_df = spark.read.orc("hdfs://localhost:9000/user/orc/orc/vege_production/pumpkin")
 
 
     # 생산량 table
