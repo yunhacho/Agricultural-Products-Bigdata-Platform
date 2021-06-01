@@ -29,6 +29,8 @@
 		682ECB87266405C800F02DD3 /* DateSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 682ECB86266405C800F02DD3 /* DateSearch.storyboard */; };
 		682ECB89266405D700F02DD3 /* GraphView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 682ECB88266405D700F02DD3 /* GraphView.storyboard */; };
 		682ECB8B266405EE00F02DD3 /* PredictPrice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 682ECB8A266405EE00F02DD3 /* PredictPrice.storyboard */; };
+		682ECB8D266528DE00F02DD3 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB8C266528DC00F02DD3 /* FoodCell.swift */; };
+		682ECB8F2665643000F02DD3 /* GraphViewExtenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB8E2665642F00F02DD3 /* GraphViewExtenstion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
 		682ECB86266405C800F02DD3 /* DateSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DateSearch.storyboard; sourceTree = "<group>"; };
 		682ECB88266405D700F02DD3 /* GraphView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GraphView.storyboard; sourceTree = "<group>"; };
 		682ECB8A266405EE00F02DD3 /* PredictPrice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PredictPrice.storyboard; sourceTree = "<group>"; };
+		682ECB8C266528DC00F02DD3 /* FoodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
+		682ECB8E2665642F00F02DD3 /* GraphViewExtenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewExtenstion.swift; sourceTree = "<group>"; };
 		993BCA4680CBB609DC481C21 /* Pods_Jongp2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jongp2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE79E3EF6CFC6A7CB4CAF233 /* Pods-Jongp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jongp2.release.xcconfig"; path = "Target Support Files/Pods-Jongp2/Pods-Jongp2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,7 +150,9 @@
 				682ECB762663DB8900F02DD3 /* FoodCompareViewController.swift */,
 				682ECB7F2664056A00F02DD3 /* DateSearchViewController.swift */,
 				682ECB812664057B00F02DD3 /* GraphViewController.swift */,
+				682ECB8E2665642F00F02DD3 /* GraphViewExtenstion.swift */,
 				682ECB832664058600F02DD3 /* PredictPriceViewController.swift */,
+				682ECB8C266528DC00F02DD3 /* FoodCell.swift */,
 			);
 			path = TabView;
 			sourceTree = "<group>";
@@ -288,10 +294,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				682ECB8F2665643000F02DD3 /* GraphViewExtenstion.swift in Sources */,
 				682ECB802664056B00F02DD3 /* DateSearchViewController.swift in Sources */,
 				682ECB582663CDAE00F02DD3 /* ViewController.swift in Sources */,
 				682ECB542663CDAE00F02DD3 /* AppDelegate.swift in Sources */,
 				682ECB702663D0A500F02DD3 /* SecondTabController.swift in Sources */,
+				682ECB8D266528DE00F02DD3 /* FoodCell.swift in Sources */,
 				682ECB842664058600F02DD3 /* PredictPriceViewController.swift in Sources */,
 				682ECB772663DB8A00F02DD3 /* FoodCompareViewController.swift in Sources */,
 				682ECB6E2663D09900F02DD3 /* FirstTabController.swift in Sources */,
