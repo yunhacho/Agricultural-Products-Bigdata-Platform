@@ -15,7 +15,6 @@ class GraphViewController : UIViewController{
     
     var SettingView : UIView!
     
-    
     let ItemTitleLabel = UILabel()
     let ItemEditText = UITextField()
     let ItemPicker = UIPickerView()
@@ -48,18 +47,27 @@ class GraphViewController : UIViewController{
     
     var selectItem = "유가별 채소 가격 변동"
     var selectFood = "오이"
-    var selectKind = "가시계통(1kg)"
+    var selectKind = "취청50개"
     var selectRank = "중품"
     var selectElement = "평균 기온"
     
     var FoodList : [String] = ["오이" , "양파", "파", "쌀", "호박"]
     var KindList : [String] = ["취청50개", "가시계통(1kg)", "다다기계통(100개"]
     var RankList : [String] = ["중품", "상품"]
+    
+    let Item_dict : [String:Int] = ["유가별 채소 가격 변동" : 0, "연도별 채소 생산량,면적,평균가" : 1, "기온 및 습도에 따른 채소 가격 변동" : 2, "기타 요인에 따른 채소 가격 변동" : 3]
+    let food_dict : [String:Int] = ["오이":0, "양파": 1, "파":2, "호박":3, "쌀":4]
+    let kind_dict : [String:Int] = ["취청50개":0, "가시계통(1kg)":1, "다다기계통(100개)":2, "햇양파(1kg)":3, "양파(1kg)":4, "수입(1kg)":5, "대파(1kg)":6, "쪽파(1kg)":7, "애호박(20개)":8, "쥬키니(1kg)":9, "일반계(1kg)":10, "햇일반계(1kg)":11]
+    let rank_dict: [String:Int] = ["중품":0, "상품":1]
+        
+    
     var ElementList : [String]!
     
     var type : Int = 0
     
     var xData : [Double] = [1,2,3,4,5,6,7,8,9,10]
+    var xData2 : [Int] = [1,2,3,4,5,6,7,8,9,10]
+    
     var yData : [Double] = [12,43,21,24,53,63,14,23,45,36]
     var yData2 : [Double] = [7250, 6939,6886,3424,6053,7424,7245,2327,1346,4424]//면적
     var yData3 : [Double] = [1132,1235.8,1126, 1186, 1267, 1797, 1978, 2012, 2345]//평균가
@@ -71,6 +79,7 @@ class GraphViewController : UIViewController{
     var yLabel3 : String = "평균가"
     
     var LineGraph : LineChartView!
+    var BarGraph : BarChartView!
     
     let borderWidth : CGFloat = 0.2
     let borderColor : CGColor = UIColor.lightGray.cgColor
@@ -86,6 +95,8 @@ class GraphViewController : UIViewController{
         InitKindPicker()
         InitRankPicker()
         InitElementPicker()
+        
+        GraphDataRequest(selectItem : selectItem)
     }
     
     func addView(){
@@ -157,10 +168,11 @@ class GraphViewController : UIViewController{
     
     @objc func onPress() {
         print("Search click")
-        if LineGraph != nil {
+        if LineGraph != nil{
             LineGraph.removeFromSuperview()
         }
-        setLineChart()
+        
+        GraphDataRequest(selectItem : selectItem)
     }
     
     func makeConstraintsType(type : Int){
@@ -484,7 +496,6 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         FoodEditText.resignFirstResponder()
     }
 
-    // 피커뷰 > 취소 클릭
     @objc func onFoodPickCancel() {
         FoodEditText.resignFirstResponder() // 피커뷰를 내림 (텍스트필드가 responder 상태를 읽음)
     }

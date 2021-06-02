@@ -36,7 +36,6 @@ func getPredictPrice(url : String, completion: @escaping(PredictFood) -> Void){
         switch response.result {
             case .success:
                 do {
-                    
                     guard let result = response.data else {
                         return
                     }
@@ -51,3 +50,67 @@ func getPredictPrice(url : String, completion: @escaping(PredictFood) -> Void){
         }
     }
 }
+
+func getOilPrice(url : String, completion: @escaping(oilContentList) -> Void){
+    let request =  AF.request(url).validate()
+    request.responseJSON(queue : DispatchQueue.global(qos: .default)) { response in
+        switch response.result {
+            case .success:
+                do {
+                    guard let result = response.data else {
+                        return
+                    }
+                    let PredictPrice = try JSONDecoder().decode(oilContentList.self, from: result)
+                    completion(PredictPrice)
+                }catch{
+                    print("parsing error")
+                }
+            case .failure(_):
+                print("Data loading Error")
+                break
+        }
+    }
+}
+
+func getYearPrice(url : String, completion: @escaping(yearContentList) -> Void){
+    let request =  AF.request(url).validate()
+    request.responseJSON(queue : DispatchQueue.global(qos: .default)) { response in
+        switch response.result {
+            case .success:
+                do {
+                    guard let result = response.data else {
+                        return
+                    }
+                    let PredictPrice = try JSONDecoder().decode(yearContentList.self, from: result)
+                    completion(PredictPrice)
+                }catch{
+                    print("parsing error")
+                }
+            case .failure(_):
+                print("Data loading Error")
+                break
+        }
+    }
+}
+
+func getWeatherPrice(url : String, completion: @escaping(weatherContentList) -> Void){
+    let request =  AF.request(url).validate()
+    request.responseJSON(queue : DispatchQueue.global(qos: .default)) { response in
+        switch response.result {
+            case .success:
+                do {
+                    guard let result = response.data else {
+                        return
+                    }
+                    let PredictPrice = try JSONDecoder().decode(weatherContentList.self, from: result)
+                    completion(PredictPrice)
+                }catch{
+                    print("parsing error")
+                }
+            case .failure(_):
+                print("Data loading Error")
+                break
+        }
+    }
+}
+

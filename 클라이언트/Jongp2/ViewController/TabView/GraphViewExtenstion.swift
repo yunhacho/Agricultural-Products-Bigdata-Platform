@@ -40,35 +40,241 @@ extension GraphViewController{
         LineGraph.rightAxis.enabled = false
         LineGraph.xAxis.setLabelCount(xData.count, force: false)
         
-        if selectItem == "연도별 채소 생산량,면적,평균가" {
-            var dataEntries2: [ChartDataEntry] = []
-            for i in 0..<yData2.count {
-                let dataEntry2 = ChartDataEntry(x: xData[i], y: yData2[i])
-                dataEntries2.append(dataEntry2)
-            }
-            
-            var dataEntries3: [ChartDataEntry] = []
-            for i in 0..<yData3.count {
-                let dataEntry3 = ChartDataEntry(x: xData[i], y: yData3[i])
-                dataEntries3.append(dataEntry3)
-            }
-            
-            let line2 = LineChartDataSet(entries: dataEntries2, label: yLabel2)
-            line2.colors = [NSUIColor.red]
-            
-            let line3 = LineChartDataSet(entries: dataEntries3, label: yLabel3)
-            line3.colors = [NSUIColor.green]
-            data.addDataSet(line2)
-            data.addDataSet(line3)
+        LineGraph.chartDescription?.text = selectItem
+        LineGraph.data = data
+        LineGraph.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+    }
+    
+    func setYearLineChart(){
+        
+        LineGraph = LineChartView()
+        self.view.addSubview(LineGraph)
+        LineGraph.snp.makeConstraints{ make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.5)
+            make.top.equalTo(SearchBtn.snp.bottom).offset(20)
         }
+        
+        LineGraph.noDataText = "데이터가 없습니다."
+        LineGraph.noDataFont = .systemFont(ofSize: 20)
+        LineGraph.noDataTextColor = .lightGray
+        // 데이터 생성
+        var dataEntries: [ChartDataEntry] = []
+        for i in 0..<xData.count {
+            let dataEntry = ChartDataEntry(x: xData[i], y: yData[i])
+            dataEntries.append(dataEntry)
+        }
+        
+        var dataEntries2: [ChartDataEntry] = []
+        for i in 0..<yData2.count {
+            let dataEntry2 = ChartDataEntry(x: xData[i], y: yData2[i])
+            dataEntries2.append(dataEntry2)
+        }
+        
+        var dataEntries3: [ChartDataEntry] = []
+        for i in 0..<yData3.count {
+            let dataEntry3 = ChartDataEntry(x: xData[i], y: yData3[i])
+            dataEntries3.append(dataEntry3)
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 0
+        formatter.numberStyle = .none
+        formatter.locale = .current
+        
+        //평균 가격
+        let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
+        line1.colors = [NSUIColor.blue]
+        
+        //생산량
+        let line2 = LineChartDataSet(entries: dataEntries2, label: yLabel2)
+        line2.colors = [NSUIColor.red]
+        
+        //면적
+        let line3 = LineChartDataSet(entries: dataEntries3, label: yLabel3)
+        line3.colors = [NSUIColor.green]
+        line3.valueFormatter = DefaultValueFormatter(formatter: formatter)
+        
+        let data = LineChartData()
+        data.addDataSet(line1)
+        data.addDataSet(line2)
+        data.addDataSet(line3)
+        
+        let leftAxisFormatter = NumberFormatter()
+        leftAxisFormatter.maximumFractionDigits = 0
+        leftAxisFormatter.numberStyle = .none
+        leftAxisFormatter.locale = .current
+        
+        LineGraph.xAxis.valueFormatter = DefaultAxisValueFormatter(formatter: leftAxisFormatter)
+        LineGraph.xAxis.labelPosition = .bottom
+        LineGraph.rightAxis.enabled = false
+        LineGraph.xAxis.setLabelCount(xData.count, force: true)
         
         LineGraph.chartDescription?.text = selectItem
         LineGraph.data = data
         LineGraph.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
     }
     
-    func makeGraph(){
+    func setWeatherChart(){
+        
+        LineGraph = LineChartView()
+        self.view.addSubview(LineGraph)
+        LineGraph.snp.makeConstraints{ make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.5)
+            make.top.equalTo(SearchBtn.snp.bottom).offset(20)
+        }
+        
+        LineGraph.noDataText = "데이터가 없습니다."
+        LineGraph.noDataFont = .systemFont(ofSize: 20)
+        LineGraph.noDataTextColor = .lightGray
+        // 데이터 생성
+        var dataEntries: [ChartDataEntry] = []
+        for i in 0..<xData.count {
+            let dataEntry = ChartDataEntry(x: xData[i], y: yData[i])
+            dataEntries.append(dataEntry)
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 0
+        formatter.numberStyle = .none
+        formatter.locale = .current
+        
+        //평균 가격
+        let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
+        line1.colors = [NSUIColor.blue]
+        line1.highlightEnabled = false
+        
+        let data = LineChartData()
+        data.addDataSet(line1)
+        
+        let leftAxisFormatter = NumberFormatter()
+        leftAxisFormatter.maximumFractionDigits = 0
+        leftAxisFormatter.numberStyle = .none
+        leftAxisFormatter.locale = .current
+        
+
+        // 줌 안되게
+        LineGraph.doubleTapToZoomEnabled = false
+        LineGraph.xAxis.labelCount = 5
+        LineGraph.xAxis.valueFormatter = self
+        LineGraph.xAxis.labelPosition = .bottom
+        LineGraph.rightAxis.enabled = false
+        LineGraph.xAxis.setLabelCount(xData.count, force: true)
+        
+        LineGraph.chartDescription?.text = selectItem
+        LineGraph.data = data
+        LineGraph.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+    }
+    
+    func GraphDataRequest(selectItem : String){
+        if Item_dict[selectItem] == 0{
+            getOilGraph(item : food_dict[selectFood]!, kind : kind_dict[selectKind]!, rank : rank_dict[selectRank]!)
+        } else if Item_dict[selectItem] == 1{
+            getYearGraph(item : food_dict[selectFood]!, kind : kind_dict[selectKind]!, rank : rank_dict[selectRank]!)
+        } else if Item_dict[selectItem] == 2{
+            getWeatherGraph(item : food_dict[selectFood]!, kind : kind_dict[selectKind]!, rank : rank_dict[selectRank]!)
+        } else if Item_dict[selectItem] == 3{
+            
+        }
         
     }
     
+    func getOilGraph(item : Int, kind : Int, rank : Int){
+        print("\(WasURL.getURL(url:requestURL.graph_oil))?item=\(item)&kind=\(kind)&rank=\(rank)")
+        
+        getOilPrice(url : "\(WasURL.getURL(url:requestURL.graph_oil))?item=\(item)&kind=\(kind)&rank=\(rank)"){ [weak self] result in
+            self?.xData.removeAll()
+            self?.yData.removeAll()
+            for i in 0..<result.oil_avgPrice_df.count{
+                
+                self?.xData.append(result.oil_avgPrice_df[i].oil_price)
+                self?.yData.append(result.oil_avgPrice_df[i].avg_price)
+                
+            }
+            
+            DispatchQueue.main.async {
+                self?.setLineChart()
+            }
+        }
+    }
+    
+    func getYearGraph(item : Int, kind : Int, rank : Int){
+        print("\(WasURL.getURL(url:requestURL.graph_year))?item=\(item)&kind=\(kind)&rank=\(rank)")
+        
+        getYearPrice(url : "\(WasURL.getURL(url:requestURL.graph_year))?item=\(item)&kind=\(kind)&rank=\(rank)"){ [weak self] result in
+            self?.xData.removeAll()
+            self?.yData.removeAll()
+            self?.yData2.removeAll()
+            self?.yData3.removeAll()
+            
+            for i in 0..<result.contents.count{
+                self?.xData.append(Double(result.contents[i].year))
+                
+                self?.yData.append(Double(result.contents[i].output)!)
+                self?.yData2.append(Double(result.contents[i].area)!)
+                self?.yData3.append(result.contents[i].avg_price)
+            }
+            
+            DispatchQueue.main.async {
+                self?.setYearLineChart()
+            }
+        }
+    }
+    
+    func getWeatherGraph(item : Int, kind : Int, rank : Int){
+        print("\(WasURL.getURL(url:requestURL.graph_weather))?item=\(item)&kind=\(kind)&rank=\(rank)")
+        
+        getWeatherPrice(url : "\(WasURL.getURL(url:requestURL.graph_weather))?item=\(item)&kind=\(kind)&rank=\(rank)"){ [weak self] result in
+            self?.xData.removeAll()
+            self?.yData.removeAll()
+            
+            for i in 0..<result.weather_avgPrice_df.count{
+                self?.xData.append(Double(result.weather_avgPrice_df[i].element))
+                self?.yData.append(result.weather_avgPrice_df[i].avg_price)
+            }
+            
+            DispatchQueue.main.async {
+                self?.setWeatherChart()
+            }
+        }
+    }
+}
+
+extension GraphViewController: IAxisValueFormatter {
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let months = ["평균 기온", "평균 습도", "강수량", "평균 풍량", "일조량"]
+        return months[Int(value)]
+    }
+}
+
+struct oilContentList : Codable{
+    let current_oil : Double!
+    let oil_avgPrice_df : [oilContent]
+}
+
+struct oilContent : Codable {
+    let oil_price : Double
+    let avg_price : Double
+}
+
+struct yearContentList : Codable{
+    let contents : [yearContent]
+}
+
+struct yearContent : Codable {
+    let year : Int
+    let area : String
+    let output : String
+    let avg_price : Double
+}
+
+struct weatherContentList : Codable{
+    let current_weather : Int
+    let weather_avgPrice_df : [weatherContent]
+}
+
+struct weatherContent : Codable{
+    let element : Int
+    let avg_price : Double
 }
