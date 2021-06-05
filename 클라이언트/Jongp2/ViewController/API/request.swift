@@ -10,11 +10,11 @@ import Alamofire
 
 func getBeforeFood(url : String, completion: @escaping([FoodContent]) -> Void){
     let request =  AF.request(url).validate()
+    print(url)
     request.responseJSON(queue : DispatchQueue.global(qos: .default)) { response in
         switch response.result {
             case .success:
                 do {
-                    
                     guard let result = response.data else {
                         return
                     }
@@ -114,3 +114,45 @@ func getWeatherPrice(url : String, completion: @escaping(weatherContentList) -> 
     }
 }
 
+func getPrice(url : String, completion: @escaping(priceContentList) -> Void){
+    let request =  AF.request(url).validate()
+    request.responseJSON(queue : DispatchQueue.global(qos: .default)) { response in
+        switch response.result {
+            case .success:
+                do {
+                    guard let result = response.data else {
+                        return
+                    }
+                    let PredictPrice = try JSONDecoder().decode(priceContentList.self, from: result)
+                    completion(PredictPrice)
+                }catch{
+                    print("parsing error")
+                }
+            case .failure(_):
+                print("Data loading Error")
+                break
+        }
+    }
+}
+
+func getAuctions(url : String, completion: @escaping(Auctions) -> Void){
+    let request =  AF.request(url).validate()
+    
+    request.responseJSON(queue : DispatchQueue.global(qos: .default)) { response in
+        switch response.result {
+            case .success:
+                do {
+                    guard let result = response.data else {
+                        return
+                    }
+                    let PredictPrice = try JSONDecoder().decode(Auctions.self, from: result)
+                    completion(PredictPrice)
+                }catch{
+                    print("parsing error")
+                }
+            case .failure(_):
+                print("Data loading Error")
+                break
+        }
+    }
+}

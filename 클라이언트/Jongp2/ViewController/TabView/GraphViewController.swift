@@ -42,7 +42,7 @@ class GraphViewController : UIViewController{
     
     let SearchBtn = UIButton()
     
-    let ItemNames = ["유가별 채소 가격 변동" , "연도별 채소 생산량,면적,평균가", "기온 및 습도에 따른 채소 가격 변동", "기타 요인에 따른 채소 가격 변동"]
+    let ItemNames = ["유가별 채소 가격 변동" , "연도별 채소 생산량,면적,평균가", "날씨 요인에 따른 채소 가격 변동", "기타 요인에 따른 채소 가격 변동"]
     var Item = "유가별 채소 가격 변동"
     
     var selectItem = "유가별 채소 가격 변동"
@@ -55,11 +55,12 @@ class GraphViewController : UIViewController{
     var KindList : [String] = ["취청50개", "가시계통(1kg)", "다다기계통(100개"]
     var RankList : [String] = ["중품", "상품"]
     
-    let Item_dict : [String:Int] = ["유가별 채소 가격 변동" : 0, "연도별 채소 생산량,면적,평균가" : 1, "기온 및 습도에 따른 채소 가격 변동" : 2, "기타 요인에 따른 채소 가격 변동" : 3]
+    let Item_dict : [String:Int] = ["유가별 채소 가격 변동" : 0, "연도별 채소 생산량,면적,평균가" : 1, "날씨 요인에 따른 채소 가격 변동" : 2, "기타 요인에 따른 채소 가격 변동" : 3]
     let food_dict : [String:Int] = ["오이":0, "양파": 1, "파":2, "호박":3, "쌀":4]
     let kind_dict : [String:Int] = ["취청50개":0, "가시계통(1kg)":1, "다다기계통(100개)":2, "햇양파(1kg)":3, "양파(1kg)":4, "수입(1kg)":5, "대파(1kg)":6, "쪽파(1kg)":7, "애호박(20개)":8, "쥬키니(1kg)":9, "일반계(1kg)":10, "햇일반계(1kg)":11]
     let rank_dict: [String:Int] = ["중품":0, "상품":1]
-        
+    
+    var element_dict : [String : Int] = ["평균 기온" : 0, "평균 습도" : 1, "강수량" : 2, "평균 풍량" : 3]
     
     var ElementList : [String]!
     
@@ -150,7 +151,7 @@ class GraphViewController : UIViewController{
         RankTitleLabel.textAlignment = .center
         RankTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
-        if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
+        if selectItem == "날씨 요인에 따른 채소 가격 변동"{
             ElementTitleLabel.text = "날씨 요소"
         } else if selectItem == "기타 요인에 따른 채소 가격 변동"{
             ElementTitleLabel.text = "기타 요인"
@@ -160,8 +161,8 @@ class GraphViewController : UIViewController{
         ElementTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         SearchBtn.setTitle("확인", for: .normal)
-        SearchBtn.setTitleColor(UIColor.black, for: .normal)
-        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(0.3)
+        SearchBtn.setTitleColor(ColorSetting.btnTextColor, for: .normal)
+        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(ColorSetting.btnAlpha)
         SearchBtn.isUserInteractionEnabled = true
         SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
     }
@@ -307,6 +308,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onItemPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onItemPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.ItemPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.ItemPicker.delegate = self
@@ -350,25 +353,21 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
                 yLabel = "생산량"
             }
         }
-        else if selectItem == "기온 및 습도에 따른 채소 가격 변동" || selectItem == "기타 요인에 따른 채소 가격 변동" {
+        else if selectItem == "날씨 요인에 따른 채소 가격 변동" || selectItem == "기타 요인에 따른 채소 가격 변동" {
             InitUI()
             addPickerViewType(type: 1)
             makeConstraintsType(type : 1)
-            if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
-                ElementList = ["평균 기온", "평균 습도", "강수량", "평균 풍량", "일조량"]
+            if selectItem == "날씨 요인에 따른 채소 가격 변동"{
+                ElementList = ["평균 기온", "평균 습도", "강수량", "평균 풍량"]
+                xLabel = "평균 기온"
+                yLabel = "\(ElementList[0])에 따른 채소 평균가"
             }else {
                 ElementList = ["곡물 및 식량작물", "채소 및 과실", "식료품", "음료품", "비료 및 농약",
                                "농업 및 건설용 기계", "기타 운송 장비", "전력 가스 및 증기", "수도 폐기물 처리 및 재활용 서비스", "음식점 및 숙박 서비스", "장비 용품 및 지식 재산권 임대"]
+                xLabel = "곡물 및 식량작물"
+                yLabel = "\(ElementList[0])에 따른 채소 평균가"
             }
             ElementEditText.text = ElementList[0]
-            
-            if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
-                xLabel = "평균 기온"
-                yLabel = "채소 평균가"
-            } else if selectItem == "기타 요인에 따른 채소 가격 변동"{
-                xLabel = "곡물 및 식량작물"
-                yLabel = "채소 평균가"
-            }
         }
         
         ItemEditText.resignFirstResponder()
@@ -445,6 +444,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onFoodPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onFoodPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.FoodPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.FoodPicker.delegate = self
@@ -504,6 +505,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onKindPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onKindPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.KindPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.KindPicker.delegate = self
@@ -541,6 +544,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onRankPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onRankPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.RankPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.RankPicker.delegate = self
@@ -578,6 +583,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onElementPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onElementPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.ElementPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.ElementPicker.delegate = self
@@ -603,11 +610,12 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
     @objc func onElementPickDone() {
         ElementEditText.text = selectElement
         ElementEditText.resignFirstResponder()
+        xLabel = "\(selectElement)에 따른 채소 평균가"
         
-        if selectItem == "기타 요인에 따른 채소 가격 변동"{
-            xLabel = selectElement
-        } else if selectItem == "기온 및 습도에 따른 채소 가격 변동"{
-            xLabel = selectElement
+        if selectItem == "날씨 요인에 따른 채소 가격 변동"{
+            element_dict = ["평균 기온" : 0, "평균 습도" : 1, "강수량" : 2, "평균 풍량" : 3]
+        } else if selectItem == "기타 요인에 따른 채소 가격 변동" {
+            element_dict = ["곡물 및 식량작물" : 0, "채소 및 과실 " : 1, "식료품" : 2, "음료품" : 3, "비료 및 농약" : 4, "농업 및 건설용 기계" : 5, "기타 운송 장비" : 6, "전력 가스 및 증기" : 7, "수도 폐기물 처리 및 재활용 서비스" : 8, "음식점 및 숙박 서비스" : 9, "장비 용품 및 지식 재산권 임대" : 10]
         }
         
     }

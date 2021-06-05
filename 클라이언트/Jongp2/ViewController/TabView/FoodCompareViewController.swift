@@ -88,8 +88,8 @@ class FoodCompareViewController : UIViewController{
 //        let systemImage = UIImage(systemName: "magnifyingglass", withConfiguration: config )
 //
         SearchBtn.setTitle("검색하기", for: .normal)
-        SearchBtn.setTitleColor(UIColor.black, for: .normal)
-        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(0.3)
+        SearchBtn.setTitleColor(ColorSetting.btnTextColor, for: .normal)
+        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(ColorSetting.btnAlpha)
         SearchBtn.isUserInteractionEnabled = true
         SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
     }
@@ -282,6 +282,8 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onItemPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onItemPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.ItemPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.ItemPicker.delegate = self
@@ -327,6 +329,8 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onDatePickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onDatePickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.DateToolbar.barStyle = .default
         self.DateToolbar.isTranslucent = true  // 툴바가 반투명인지 여부 (true-반투명, false-투명)
@@ -335,6 +339,7 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         self.DateToolbar.setItems([btnCancel , space , btnDone], animated: true)   // 버튼추가
         self.DateToolbar.isUserInteractionEnabled = true   // 사용자 클릭 이벤트 전달
         
+        
         DatePicker.preferredDatePickerStyle = .wheels
         DatePicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200)
         DatePicker.datePickerMode = .date
@@ -342,8 +347,7 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
        
         DatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
         DatePicker.maximumDate = Date()
-        
-        
+        DatePicker.setValue(UIColor.white, forKey: "backgroundColor")
         //TimeEditText.frame = CGRect(x: 0, y: 0, width:100, height: 30)
         DateEditText.inputView = DatePicker
         DateEditText.inputAccessoryView = DateToolbar
@@ -396,6 +400,10 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         if (pickerView == ItemPicker){
             selectItem = ItemNames[row]
             return ItemNames[row]
+        } else {
+            pickerView.subviews.forEach {
+                $0.backgroundColor = .clear
+            }
         }
         return ""
     }
@@ -412,6 +420,7 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
 extension FoodCompareViewController{
     
     func getBeforePrice(item : Int, date : String){
+        
         print("\(WasURL.getURL(url:requestURL.days_before))?item=\(item)&date=\(date)")
         getBeforeFood(url : "\(WasURL.getURL(url:requestURL.days_before))?item=\(item)&date=\(date)"){ [weak self] result in
             for i in 0..<result.count{

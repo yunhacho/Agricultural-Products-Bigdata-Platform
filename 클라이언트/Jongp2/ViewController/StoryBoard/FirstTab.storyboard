@@ -18,10 +18,11 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="농산품 조회" image="cart.fill" catalog="system" id="iUP-TZ-D0p"/>
+                    <tabBarItem key="tabBarItem" title="농산품 조회" image="icon1" id="iUP-TZ-D0p"/>
                     <navigationItem key="navigationItem" id="fDt-Ya-AMi"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="TabItem" destination="iUP-TZ-D0p" id="ZYf-XE-ISt"/>
                         <segue destination="MqE-qv-tTi" kind="show" id="eJl-LL-lKV"/>
                         <segue destination="s2p-pl-TJu" kind="show" id="MkT-xa-E06"/>
                         <segue destination="6je-y9-SmU" kind="show" id="Sao-83-Ba2"/>
@@ -74,7 +75,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cart.fill" catalog="system" width="128" height="102"/>
+        <image name="icon1" width="25" height="25"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		67B17D189FCACC367E815E82 /* Pods_Jongp2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 993BCA4680CBB609DC481C21 /* Pods_Jongp2.framework */; };
+		681BBD4F266B7A130025568A /* webSocketWithStomp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681BBD4E266B7A130025568A /* webSocketWithStomp.swift */; };
 		682ECB542663CDAE00F02DD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB532663CDAE00F02DD3 /* AppDelegate.swift */; };
 		682ECB562663CDAE00F02DD3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB552663CDAE00F02DD3 /* SceneDelegate.swift */; };
 		682ECB582663CDAE00F02DD3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB572663CDAE00F02DD3 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		40C4E55E3928730D7835E507 /* Pods-Jongp2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jongp2.debug.xcconfig"; path = "Target Support Files/Pods-Jongp2/Pods-Jongp2.debug.xcconfig"; sourceTree = "<group>"; };
+		681BBD4E266B7A130025568A /* webSocketWithStomp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = webSocketWithStomp.swift; sourceTree = "<group>"; };
 		682ECB502663CDAE00F02DD3 /* Jongp2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jongp2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		682ECB532663CDAE00F02DD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		682ECB552663CDAE00F02DD3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		681BBD50266C1B000025568A /* Image */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 		682ECB472663CDAE00F02DD3 = {
 			isa = PBXGroup;
 			children = (
@@ -132,9 +141,10 @@
 		682ECB6C2663D08100F02DD3 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				681BBD50266C1B000025568A /* Image */,
+				682ECB9326664F6000F02DD3 /* Cell */,
 				682ECB712663D78000F02DD3 /* API */,
 				682ECB9026664F2500F02DD3 /* Color */,
-				682ECB9326664F6000F02DD3 /* Cell */,
 				682ECB7E2664011D00F02DD3 /* TabView */,
 				682ECB692663D06A00F02DD3 /* StoryBoard */,
 				682ECB572663CDAE00F02DD3 /* ViewController.swift */,
@@ -150,6 +160,7 @@
 			children = (
 				682ECB722663D79100F02DD3 /* WasURL.swift */,
 				682ECBAB2666BBBE00F02DD3 /* request.swift */,
+				681BBD4E266B7A130025568A /* webSocketWithStomp.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -328,6 +339,7 @@
 				682ECB952666590900F02DD3 /* ColorTable.swift in Sources */,
 				682ECB582663CDAE00F02DD3 /* ViewController.swift in Sources */,
 				682ECB542663CDAE00F02DD3 /* AppDelegate.swift in Sources */,
+				681BBD4F266B7A130025568A /* webSocketWithStomp.swift in Sources */,
 				682ECB9226664F3900F02DD3 /* UIColor.swift in Sources */,
 				682ECB702663D0A500F02DD3 /* SecondTabController.swift in Sources */,
 				682ECB8D266528DE00F02DD3 /* FoodCell.swift in Sources */,

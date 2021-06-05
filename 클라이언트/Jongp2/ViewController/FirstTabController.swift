@@ -10,6 +10,9 @@ import UIKit
 import SnapKit
 
 class FirstTabController: UIViewController {
+    
+    let TitleBar = UILabel()
+    
     let SettingView = UIView()
     
     var itemName : String!
@@ -24,6 +27,17 @@ class FirstTabController: UIViewController {
     var contentView : UIView!
     
     var selectStoryBoard : UIStoryboard!
+    
+    var StatusBar : UIView!
+    var getstatusBar : UIView{
+        get {
+            let statusView = UIView()
+            statusView.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor)
+            return statusView
+        }
+    }
+    
+    @IBOutlet weak var TabItem: UITabBarItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,15 +54,30 @@ class FirstTabController: UIViewController {
     
     func addView(){
         //self.view.addSubview(SettingView)
+        
+        self.view.addSubview(StatusBar)
+        self.view.addSubview(TitleBar)
         self.view.backgroundColor = .white
         self.view.addSubview(tabCollectionView)
         self.view.addSubview(contentView)
     }
     
     func initValue(){
+        StatusBar = getstatusBar
+        
+        TitleBar.text = "농산물 조희"
+        TitleBar.textAlignment = .center
+        TitleBar.textColor = .white
+        TitleBar.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        TitleBar.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1)
+        
         selectStoryBoard = UIStoryboard(name: "FirstTab", bundle: nil)
         contentView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height * 0.78))
         contentView.isUserInteractionEnabled = true
+        
+//        let image = UIImage(named: "icon1.png")
+//        image?.size =
+//        TabItem.image =
     }
     
     func InitTabview(){
@@ -71,11 +100,21 @@ class FirstTabController: UIViewController {
     }
     
     func makeConstraints(){
+        StatusBar.snp.makeConstraints{ make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.04)
+        }
+        
+        TitleBar.snp.makeConstraints{ make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.06)
+            make.top.equalTo(StatusBar.snp.bottom).offset(0)
+        }
         
         //white로 무조건 넣어주기
         tabCollectionView.backgroundColor = .white
         tabCollectionView.snp.makeConstraints{ make in
-            make.top.equalTo(self.view).offset(50)
+            make.top.equalTo(TitleBar.snp.bottom).offset(0)
             make.width.equalToSuperview()
             make.height.equalTo(TabCellHeight)
         }
@@ -88,6 +127,9 @@ class FirstTabController: UIViewController {
         }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+       return .lightContent
+    }
     
 }
 

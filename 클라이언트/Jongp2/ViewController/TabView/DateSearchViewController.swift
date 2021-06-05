@@ -99,8 +99,8 @@ class DateSearchViewController : UIViewController{
         SlashUILabel.textAlignment = .center
         
         SearchBtn.setTitle("검색하기", for: .normal)
-        SearchBtn.setTitleColor(UIColor.black, for: .normal)
-        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(0.3)
+        SearchBtn.setTitleColor(ColorSetting.btnTextColor, for: .normal)
+        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(ColorSetting.btnAlpha)
         SearchBtn.isUserInteractionEnabled = true
         SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
     }
@@ -303,6 +303,8 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onItemPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onItemPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.ItemPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.ItemPicker.delegate = self
@@ -341,6 +343,8 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onStartDatePickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onStartDatePickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.StartDateToolbar.barStyle = .default
         self.StartDateToolbar.isTranslucent = true  // 툴바가 반투명인지 여부 (true-반투명, false-투명)
@@ -356,6 +360,7 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
        
         StartDatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
         StartDatePicker.maximumDate = Date()
+        StartDatePicker.setValue(UIColor.white, forKey: "backgroundColor")
         
         
         //TimeEditText.frame = CGRect(x: 0, y: 0, width:100, height: 30)
@@ -377,6 +382,8 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onEndDatePickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onEndDatePickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.EndDateToolbar.barStyle = .default
         self.EndDateToolbar.isTranslucent = true  // 툴바가 반투명인지 여부 (true-반투명, false-투명)
@@ -392,7 +399,7 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
        
         EndDatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
         EndDatePicker.maximumDate = Date()
-        
+        EndDatePicker.setValue(UIColor.white, forKey: "backgroundColor")
         
         //TimeEditText.frame = CGRect(x: 0, y: 0, width:100, height: 30)
         EndDateEditText.inputView = EndDatePicker

@@ -110,8 +110,8 @@ class PredictPriceViewController : UIViewController{
         RankTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         SearchBtn.setTitle("예측하기", for: .normal)
-        SearchBtn.setTitleColor(UIColor.black, for: .normal)
-        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(0.3)
+        SearchBtn.setTitleColor(ColorSetting.btnTextColor, for: .normal)
+        SearchBtn.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1).withAlphaComponent(ColorSetting.btnAlpha)
         SearchBtn.isUserInteractionEnabled = true
         SearchBtn.addTarget(self, action: #selector(self.onPress), for: .touchUpInside)
         
@@ -293,6 +293,8 @@ extension PredictPriceViewController : UIPickerViewDelegate , UIPickerViewDataSo
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onFoodPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onFoodPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.FoodPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.FoodPicker.delegate = self
@@ -353,6 +355,8 @@ extension PredictPriceViewController : UIPickerViewDelegate , UIPickerViewDataSo
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onKindPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onKindPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.KindPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.KindPicker.delegate = self
@@ -390,6 +394,8 @@ extension PredictPriceViewController : UIPickerViewDelegate , UIPickerViewDataSo
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onRankPickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onRankPickCancel))
+        btnDone.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
+        btnCancel.tintColor = UIColor(rgb: ColorSetting.backgroundColor)
         
         self.RankPicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 220)
         self.RankPicker.delegate = self

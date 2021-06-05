@@ -17,10 +17,21 @@ class SecondTabController : UIViewController{
     let FoodTableView = UITableView()
     var FoodContents : [FoodContent] = []
     
-    let borderWidth : CGFloat = 0.4
+    let borderWidth : CGFloat = 0.6
     let borderColor : CGColor = UIColor.black.cgColor
     
     var AuctionList : [Auction] = []
+    
+    let WebSocketWithStomp = webSocketWithStomp()
+    
+    var StatusBar : UIView!
+    var getstatusBar : UIView{
+        get {
+            let statusView = UIView()
+            statusView.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor)
+            return statusView
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
@@ -29,31 +40,53 @@ class SecondTabController : UIViewController{
         makeConstraints()
         
         InitTitle()
-        initFoodContents()
-        tableViewSetting(width: self.view.frame.width, height: self.view.frame.height * 0.3)
+        InitStomp(viewcontroller: self)
+        
+        getBefordAuctionsList()
+        //initFoodContents()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+//        if WebSocketWithStomp.socketClient.isConnected() {
+//            WebSocketWithStomp.unsubscribe()
+//        }
+    }
+    
+    func InitStomp(viewcontroller : SecondTabController){
+        WebSocketWithStomp.registerSocket(viewcontroller: viewcontroller)
     }
     
     func addView(){
+        self.view.addSubview(StatusBar)
         self.view.addSubview(TitleBar)
         self.view.addSubview(FoodTitleLabel)
         self.view.addSubview(FoodTableView)
     }
     
     func InitUI(){
+        StatusBar = getstatusBar
+        
         TitleBar.text = "실시간 경매 조회"
         TitleBar.textAlignment = .center
+        TitleBar.textColor = .white
         TitleBar.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        TitleBar.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1)
         
-        FoodTitleLabel.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(0.3)
+        FoodTitleLabel.backgroundColor = UIColor(rgb: ColorSetting.backgroundColor).withAlphaComponent(1)
         FoodTitleLabel.layer.borderWidth = 0.8
         FoodTitleLabel.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     func makeConstraints(){
+        StatusBar.snp.makeConstraints{ make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.04)
+        }
+        
         TitleBar.snp.makeConstraints{ make in
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.06)
-            make.top.equalTo(self.view).offset(40)
+            make.top.equalTo(StatusBar.snp.bottom).offset(0)
         }
         
         FoodTitleLabel.layer.borderWidth = 0.6
@@ -93,41 +126,49 @@ class SecondTabController : UIViewController{
         mclassLabel.text = "품목명(등급)"
         mclassLabel.textAlignment = .center
         mclassLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        mclassLabel.textColor = .white
         
         unitLabel.text = "규격"
         unitLabel.textAlignment = .center
         unitLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        unitLabel.textColor = .white
         
         //
         sclassnameLabel.text = "품종"
         sclassnameLabel.textAlignment = .center
         sclassnameLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        
+        sclassnameLabel.textColor = .white
         
         //
         priceLabel.text = "경락가"
         priceLabel.textAlignment = .center
         priceLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        priceLabel.textColor = .white
         
         tradeamtLabel.text = "거래량"
         tradeamtLabel.textAlignment = .center
         tradeamtLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        tradeamtLabel.textColor = .white
         
         sanjiLabel.text = "산지"
         sanjiLabel.textAlignment = .center
         sanjiLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        sanjiLabel.textColor = .white
         
         bidtimeLabel.text = "경매시간"
         bidtimeLabel.textAlignment = .center
         bidtimeLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        bidtimeLabel.textColor = .white
         
         marketnameLabel.text = "도매시장"
         marketnameLabel.textAlignment = .center
         marketnameLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        marketnameLabel.textColor = .white
         
         conameLabel.text = "도매법인"
         conameLabel.textAlignment = .center
         conameLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        conameLabel.textColor = .white
         
         FoodTitleLabel.addSubview(mclassLabel)
         FoodTitleLabel.addSubview(unitLabel)
@@ -238,14 +279,14 @@ class SecondTabController : UIViewController{
         FoodTableView.rowHeight = height * 0.275
     }
     
-    func initFoodContents(){
-        for _ in 0..<3{
-            AuctionList.append(Auction(mclassname: "깻잎", sclassname: "깻잎 깻잎 (일반)", bidtime: "2021-06-02 13:23:32", price: 23500, gradename: "특", marketname: "광주각화도매", codname: "광주중앙청과", sanji: "충남 금산군", tradeamt: 21, unitname: "2kg 상자"))
-            AuctionList.append(Auction(mclassname: "깻잎", sclassname: "깻잎 깻잎순", bidtime: "2021-06-02 13:23:32", price: 10200, gradename: "없음", marketname: "대전오정도매", codname: "농협대전(공)", sanji: "충남 금산군", tradeamt: 3, unitname: "4kg"))
-            AuctionList.append(Auction(mclassname: "미나리", sclassname: "미나리 미나리(일반)", bidtime: "2021-06-02 13:23:32", price: 11300, gradename: "없음", marketname: "대전오정도매", codname: "대전청과", sanji: "충남 부여군", tradeamt: 34, unitname: "4kg 상자"))
-            AuctionList.append(Auction(mclassname: "파프리카", sclassname: "파프리카 노랑파프리카", bidtime: "2021-06-02 13:23:32", price: 11300, gradename: "특", marketname: "대전오정도매", codname: "농협대전(공)", sanji: "전북 완주군", tradeamt: 32, unitname: "5kg"))
-        }
-    }
+//    func initFoodContents(){
+//        for _ in 0..<3{
+//            AuctionList.append(Auction(mclassname: "깻잎", sclassname: "깻잎 깻잎 (일반)", bidtime: "2021-06-02 13:23:32", price: 23500, gradename: "특", marketname: "광주각화도매", codname: "광주중앙청과", sanji: "충남 금산군", tradeamt: 21, unitname: "2kg 상자"))
+//            AuctionList.append(Auction(mclassname: "깻잎", sclassname: "깻잎 깻잎순", bidtime: "2021-06-02 13:23:32", price: 10200, gradename: "없음", marketname: "대전오정도매", codname: "농협대전(공)", sanji: "충남 금산군", tradeamt: 3, unitname: "4kg"))
+//            AuctionList.append(Auction(mclassname: "미나리", sclassname: "미나리 미나리(일반)", bidtime: "2021-06-02 13:23:32", price: 11300, gradename: "없음", marketname: "대전오정도매", codname: "대전청과", sanji: "충남 부여군", tradeamt: 34, unitname: "4kg 상자"))
+//            AuctionList.append(Auction(mclassname: "파프리카", sclassname: "파프리카 노랑파프리카", bidtime: "2021-06-02 13:23:32", price: 11300, gradename: "특", marketname: "대전오정도매", codname: "농협대전(공)", sanji: "전북 완주군", tradeamt: 32, unitname: "5kg"))
+//        }
+//    }
     
 }
 
@@ -274,13 +315,17 @@ extension SecondTabController : UITableViewDataSource{
             
             cell.sanjiLabel.text = AuctionList[indexPath.row].sanji
             
-            let dateString:String = AuctionList[indexPath.row].bidtime
+            let newString = AuctionList[indexPath.row].bidtime.replacingOccurrences(of: "T", with: " ", options: .literal, range: nil)
+            
+        
+            let dateString:String = newString
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             //dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
             
             let FinaldateFormatter = DateFormatter()
             FinaldateFormatter.dateFormat = "MM월dd일\n\nHH시mm분"
+            
             
             cell.bidtimeLabel.text = FinaldateFormatter.string(from: dateFormatter.date(from: dateString)!)
             cell.bidtimeLabel.numberOfLines = 3
@@ -302,7 +347,32 @@ extension SecondTabController : UITableViewDataSource{
     }
 }
 
-struct Auction{
+extension SecondTabController {
+    
+    func getBefordAuctionsList(){
+        print("\(WasURL.getURL(url:requestURL.record))")
+        
+        getAuctions(url : "\(WasURL.getURL(url:requestURL.record))"){ [weak self] result in
+            for i in 0..<result.contents.count{
+                self?.AuctionList.append(Auction(mclassname: result.contents[i].mclassname, sclassname: result.contents[i].sclassname, bidtime: result.contents[i].bidtime, price: result.contents[i].price, gradename: result.contents[i].gradename, marketname: result.contents[i].marketname, codname: result.contents[i].codname, sanji: result.contents[i].sanji, tradeamt: result.contents[i].tradeamt, unitname: result.contents[i].unitname))
+            }
+            
+            DispatchQueue.main.async {
+                self?.tableViewSetting(width: (self?.view.frame.width)!, height: (self?.view.frame.height)! * 0.3)
+            }
+        }
+    }
+}
+
+struct Auctions  : Codable {
+    let contents : [Auction]
+}
+
+struct StompAuctionFormat : Codable{
+    let content : Auction
+}
+
+struct Auction : Codable {
     let mclassname : String!
     let sclassname : String!
     let bidtime : String!

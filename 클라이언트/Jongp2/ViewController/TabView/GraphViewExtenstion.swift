@@ -15,6 +15,7 @@ extension GraphViewController{
         LineGraph = LineChartView()
         self.view.addSubview(LineGraph)
         LineGraph.snp.makeConstraints{ make in
+            make.centerX.equalToSuperview()
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.5)
             make.top.equalTo(SearchBtn.snp.bottom).offset(20)
@@ -32,6 +33,7 @@ extension GraphViewController{
         
         let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
         line1.colors = [NSUIColor.blue]
+        line1.lineWidth = 3.0
         
         let data = LineChartData()
         data.addDataSet(line1)
@@ -39,6 +41,9 @@ extension GraphViewController{
         LineGraph.xAxis.labelPosition = .bottom
         LineGraph.rightAxis.enabled = false
         LineGraph.xAxis.setLabelCount(xData.count, force: false)
+        
+        //LineGraph.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
+        LineGraph.xAxis.labelCount = 2 // x축에 label을 몇개 둘 것인가?
         
         LineGraph.chartDescription?.text = selectItem
         LineGraph.data = data
@@ -50,7 +55,8 @@ extension GraphViewController{
         LineGraph = LineChartView()
         self.view.addSubview(LineGraph)
         LineGraph.snp.makeConstraints{ make in
-            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(1)
             make.height.equalToSuperview().multipliedBy(0.5)
             make.top.equalTo(SearchBtn.snp.bottom).offset(20)
         }
@@ -85,15 +91,18 @@ extension GraphViewController{
         //평균 가격
         let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
         line1.colors = [NSUIColor.blue]
+        line1.lineWidth = 3.0
         
         //생산량
         let line2 = LineChartDataSet(entries: dataEntries2, label: yLabel2)
         line2.colors = [NSUIColor.red]
+        line2.lineWidth = 3.0
         
         //면적
         let line3 = LineChartDataSet(entries: dataEntries3, label: yLabel3)
         line3.colors = [NSUIColor.green]
         line3.valueFormatter = DefaultValueFormatter(formatter: formatter)
+        line3.lineWidth = 3.0
         
         let data = LineChartData()
         data.addDataSet(line1)
@@ -115,12 +124,13 @@ extension GraphViewController{
         LineGraph.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
     }
     
-    func setWeatherChart(){
+    func setWeatherAndPriceChart(){
         
         LineGraph = LineChartView()
         self.view.addSubview(LineGraph)
         LineGraph.snp.makeConstraints{ make in
-            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(1)
             make.height.equalToSuperview().multipliedBy(0.5)
             make.top.equalTo(SearchBtn.snp.bottom).offset(20)
         }
@@ -144,6 +154,7 @@ extension GraphViewController{
         let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
         line1.colors = [NSUIColor.blue]
         line1.highlightEnabled = false
+        line1.lineWidth = 3.0
         
         let data = LineChartData()
         data.addDataSet(line1)
@@ -152,12 +163,11 @@ extension GraphViewController{
         leftAxisFormatter.maximumFractionDigits = 0
         leftAxisFormatter.numberStyle = .none
         leftAxisFormatter.locale = .current
-        
 
         // 줌 안되게
-        LineGraph.doubleTapToZoomEnabled = false
+        LineGraph.doubleTapToZoomEnabled = true
         LineGraph.xAxis.labelCount = 5
-        LineGraph.xAxis.valueFormatter = self
+        //LineGraph.xAxis.valueFormatter = self // label을 텍스트로 매칭
         LineGraph.xAxis.labelPosition = .bottom
         LineGraph.rightAxis.enabled = false
         LineGraph.xAxis.setLabelCount(xData.count, force: true)
@@ -173,11 +183,10 @@ extension GraphViewController{
         } else if Item_dict[selectItem] == 1{
             getYearGraph(item : food_dict[selectFood]!, kind : kind_dict[selectKind]!, rank : rank_dict[selectRank]!)
         } else if Item_dict[selectItem] == 2{
-            getWeatherGraph(item : food_dict[selectFood]!, kind : kind_dict[selectKind]!, rank : rank_dict[selectRank]!)
+            getWeatherGraph(item : food_dict[selectFood]!, kind : kind_dict[selectKind]!, rank : rank_dict[selectRank]!, element: element_dict[selectElement]!)
         } else if Item_dict[selectItem] == 3{
-            
+            getPriceGraph(item : food_dict[selectFood]!, kind : kind_dict[selectKind]!, rank : rank_dict[selectRank]!, element: element_dict[selectElement]!)
         }
-        
     }
     
     func getOilGraph(item : Int, kind : Int, rank : Int){
@@ -187,10 +196,8 @@ extension GraphViewController{
             self?.xData.removeAll()
             self?.yData.removeAll()
             for i in 0..<result.oil_avgPrice_df.count{
-                
                 self?.xData.append(result.oil_avgPrice_df[i].oil_price)
                 self?.yData.append(result.oil_avgPrice_df[i].avg_price)
-                
             }
             
             DispatchQueue.main.async {
@@ -222,10 +229,10 @@ extension GraphViewController{
         }
     }
     
-    func getWeatherGraph(item : Int, kind : Int, rank : Int){
-        print("\(WasURL.getURL(url:requestURL.graph_weather))?item=\(item)&kind=\(kind)&rank=\(rank)")
+    func getWeatherGraph(item : Int, kind : Int, rank : Int, element : Int){
+        print("\(WasURL.getURL(url:requestURL.graph_weather))?item=\(item)&kind=\(kind)&rank=\(rank)&element=\(element)")
         
-        getWeatherPrice(url : "\(WasURL.getURL(url:requestURL.graph_weather))?item=\(item)&kind=\(kind)&rank=\(rank)"){ [weak self] result in
+        getWeatherPrice(url : "\(WasURL.getURL(url:requestURL.graph_weather))?item=\(item)&kind=\(kind)&rank=\(rank)&element=\(element)"){ [weak self] result in
             self?.xData.removeAll()
             self?.yData.removeAll()
             
@@ -235,18 +242,36 @@ extension GraphViewController{
             }
             
             DispatchQueue.main.async {
-                self?.setWeatherChart()
+                self?.setWeatherAndPriceChart()
+            }
+        }
+    }
+    
+    func getPriceGraph(item : Int, kind : Int, rank : Int, element : Int){
+        print("\(WasURL.getURL(url:requestURL.graph_price_index))?item=\(item)&kind=\(kind)&rank=\(rank)&element=\(element)")
+        
+        getPrice(url : "\(WasURL.getURL(url:requestURL.graph_price_index))?item=\(item)&kind=\(kind)&rank=\(rank)&element=\(element)"){ [weak self] result in
+            self?.xData.removeAll()
+            self?.yData.removeAll()
+            
+            for i in 0..<result.priceIndex_avgPrice_df.count{
+                self?.xData.append(Double(result.priceIndex_avgPrice_df[i].element))
+                self?.yData.append(result.priceIndex_avgPrice_df[i].avg_price)
+            }
+            
+            DispatchQueue.main.async {
+                self?.setWeatherAndPriceChart()
             }
         }
     }
 }
 
-extension GraphViewController: IAxisValueFormatter {
-    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let months = ["평균 기온", "평균 습도", "강수량", "평균 풍량", "일조량"]
-        return months[Int(value)]
-    }
-}
+//extension GraphViewController: IAxisValueFormatter {
+//    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+//        let months = ["평균 기온", "평균 습도", "강수량", "평균 풍량"]
+//        return months[Int(value)]
+//    }
+//}
 
 struct oilContentList : Codable{
     let current_oil : Double!
@@ -275,6 +300,17 @@ struct weatherContentList : Codable{
 }
 
 struct weatherContent : Codable{
+    let element : Int
+    let avg_price : Double
+}
+
+
+struct priceContentList : Codable{
+    let current_priceIndex : Int
+    let priceIndex_avgPrice_df : [priceContent]
+}
+
+struct priceContent : Codable{
     let element : Int
     let avg_price : Double
 }
