@@ -109,7 +109,7 @@ api.add_resource(ShowPriceInedxPriceGraph, '/show_graph/price_index')
 api.add_resource(ShowPricePredict, '/predict')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
 
 
 # In[ ]:
