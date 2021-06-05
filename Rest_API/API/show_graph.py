@@ -77,7 +77,7 @@ class ShowYearStatisticGraph(Resource):
         input_rank = rank_dict[request.args.get('rank')] # ex. rank= 중품
         
         graph_datas = production_area_price(input_item,input_kind,input_rank)
-        dict_datas = {i: str(graph_datas[i]) for i in range(len(graph_datas))}
+        dict_datas = {'contents':graph_datas}
 
         result = make_response(json.dumps(dict_datas, ensure_ascii=False),200)
         return result
