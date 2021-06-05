@@ -44,7 +44,8 @@ class ShowPricePredict(Resource):
 
 
         predict_price = Predict(input_item, input_kind, input_rank)
-
-        result = make_response(str(predict_price),200)
+        dict_datas = {'predict_price': str(predict_price[0][0])} # list를 dictionary로 바꾸기      
+        
+        result = make_response(json.dumps(dict_datas, ensure_ascii=False),200)
         return result
 

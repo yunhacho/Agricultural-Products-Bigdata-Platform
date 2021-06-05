@@ -61,7 +61,7 @@ class ShowPriceDaysBefore(Resource):
 
         map_datas = map(lambda row: row.asDict(), df.collect()) # dataframe을 map으로 바꾸기 (df.colloect()로 dataframe을 list화 한다)
         list_datas = list(map_datas) # map을 list로 바꾸기
-        dict_datas = {i: str(list_datas[i]) for i in range(len(list_datas))} # list를 dictionary로 바꾸기
+        dict_datas = {'contents': list_datas } # list를 dictionary로 바꾸기
 
         result = make_response(json.dumps(dict_datas, ensure_ascii=False),200)  # dictionary를 json으로 바꾸기 (ensure_ascii=False를 사용하여 아스키에 없는 문자들도 모두 출력 -> 한글출력)
         return result
@@ -92,8 +92,8 @@ class ShowPricePeriod(Resource):
 
         map_datas = map(lambda row: row.asDict(), df.collect()) # dataframe을 map으로 바꾸기 (df.colloect()로 dataframe을 list화 한다)
         list_datas = list(map_datas) # map을 list로 바꾸기
-        dict_datas = {i: str(list_datas[i]) for i in range(len(list_datas))} # list를 dictionary로 바꾸기
-        
+        dict_datas = {'contents': list_datas } # list를 dictionary로 바꾸기
+                
         result = make_response(json.dumps(dict_datas, ensure_ascii=False),200) # dictionary를 json으로 바꾸기 (ensure_ascii=False를 사용하여 아스키에 없는 문자들도 모두 출력 -> 한글출력)
         return result
 
@@ -114,7 +114,7 @@ class ShowPriceThisDay(Resource):
 
         map_datas = map(lambda row: row.asDict(), df.collect()) # dataframe을 map으로 바꾸기 (df.colloect()로 dataframe을 list화 한다)
         list_datas = list(map_datas) # map을 list로 바꾸기
-        dict_datas = {i: str(list_datas[i]) for i in range(len(list_datas))} # list를 dictionary로 바꾸기
+        dict_datas = {'contents': list_datas } # list를 dictionary로 바꾸기
 
         result = make_response(json.dumps(dict_datas, ensure_ascii=False),200)  # dictionary를 json으로 바꾸기 (ensure_ascii=False를 사용하여 아스키에 없는 문자들도 모두 출력 -> 한글출력)
         return result

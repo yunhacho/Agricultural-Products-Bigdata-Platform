@@ -6,7 +6,7 @@
 
 import sys
 import findspark
-findspark.init()
+findspark.init() #jupyter notebook에서 -> 사용하면 pyspark를 일반 library처럼 사용 가능.
 findspark.find()
 import pyspark
 findspark.find()
@@ -34,7 +34,7 @@ from pyspark.sql import SparkSession
 #      .enableHiveSupport() \
 #      .config("spark.some.config.option", "some-value") \
 
-spark = SparkSession.builder.master("local").appName("Spark_test").config("spark.some.config.option", "some-value").getOrCreate()
+spark = SparkSession.builder      .master("local")      .appName("Spark_test")      .config("spark.some.config.option", "some-value")      .getOrCreate()
 
 
 # In[3]:
@@ -85,7 +85,7 @@ def job3():
 sched.start()
 
 
-# In[ ]:
+# In[5]:
 
 
 from show_price import ShowPriceDaysBefore, ShowPricePeriod, ShowPriceThisDay

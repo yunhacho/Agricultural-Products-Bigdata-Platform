@@ -53,7 +53,7 @@ oil_avgPrice_graph_dict = {'오이':{'취청(50개)':{'중품':[],'상품':[]}, 
 
 def oil_avgPrice(item, kind, rank):
     if oil_avgPrice_graph_dict[item][kind][rank]==[]:
-        query = "SELECT A.`평균`,AVG(A.`price`)             FROM (            SELECT oil.`평균`,oil.`날짜`,priceTable.price             FROM oil JOIN priceTable ON oil.`날짜`=priceTable.timestamp             WHERE priceTable.item_name='{0}' AND priceTable.rank='{2}' AND priceTable.kind_name='{1}' AND priceTable.price NOT IN ('-', '0')             ORDER BY oil.`날짜` ASC            ) A             GROUP BY A.`평균`             ORDER BY A.`평균` ASC"
+        query = "SELECT A.`평균` AS oil_price,AVG(A.`price`) AS avg_price             FROM (            SELECT oil.`평균`,oil.`날짜`,priceTable.price             FROM oil JOIN priceTable ON oil.`날짜`=priceTable.timestamp             WHERE priceTable.item_name='{0}' AND priceTable.rank='{2}' AND priceTable.kind_name='{1}' AND priceTable.price NOT IN ('-', '0')             ORDER BY oil.`날짜` ASC            ) A             GROUP BY A.`평균`             ORDER BY A.`평균` ASC"
             
         oil_avgPrice_df = spark.sql(query.format(item, kind, rank))
 
@@ -82,7 +82,7 @@ production_dict = {'오이':'cucumberProduction', '양파':'onionProduction', '�
 
 def production_area_price(item, kind, rank):
     if year_production_area_price_graph_dict[item][kind][rank]==[]:
-        query = "SELECT {3}.`면적`,{3}.`생산량`,A.`avg(price)`,A.`연도`             FROM (            SELECT AVG(price), YEAR(timestamp) AS `연도`             FROM priceTable WHERE item_name='{0}' AND rank='{2}' AND kind_name='{1}' AND price NOT IN ('-') AND timestamp NOT IN ('-')             GROUP BY YEAR(timestamp)             ) A JOIN {3} ON A.`연도`={3}.`연도`             ORDER BY A.`연도` ASC"
+        query = "SELECT {3}.`면적` AS area,{3}.`생산량` AS output,A.`avg(price)` AS avg_price,A.`연도` AS year             FROM (            SELECT AVG(price), YEAR(timestamp) AS `연도`             FROM priceTable WHERE item_name='{0}' AND rank='{2}' AND kind_name='{1}' AND price NOT IN ('-') AND timestamp NOT IN ('-')             GROUP BY YEAR(timestamp)             ) A JOIN {3} ON A.`연도`={3}.`연도`             ORDER BY A.`연도` ASC"
 
         production_area_df = spark.sql(query.format(item, kind, rank, production_dict[item]))
 
@@ -117,7 +117,7 @@ area_dict = {'오이':'PyeongtaekWeather', '양파':'HampyeongWeather', '파':'A
 ####################### 평균 기온 및 습도 등에 따른 price 변동 그래프 (x, y) #######################
 def weather_avgPrice(item, kind, rank, element):
     if weather_avgPrice_graph_dict[item][kind][rank][element]==[]:
-        query = "SELECT A.`{3}`,AVG(A.`price`)         FROM (        SELECT {4}.{3},priceTable.price,priceTable.timestamp         FROM {4} JOIN priceTable         ON {4}.date==priceTable.timestamp         WHERE priceTable.item_name='{0}' AND priceTable.rank='{2}' AND priceTable.kind_name='{1}' AND priceTable.price NOT IN ('-')         ) A         GROUP BY A.`{3}`         ORDER BY A.`{3}` ASC"
+        query = "SELECT A.`{3}` AS element,AVG(A.`price`) AS avg_price         FROM (        SELECT {4}.{3},priceTable.price,priceTable.timestamp         FROM {4} JOIN priceTable         ON {4}.date==priceTable.timestamp         WHERE priceTable.item_name='{0}' AND priceTable.rank='{2}' AND priceTable.kind_name='{1}' AND priceTable.price NOT IN ('-')         ) A         GROUP BY A.`{3}`         ORDER BY A.`{3}` ASC"
 
         weather_df = spark.sql(query.format(item, kind, rank, element, area_dict[item]))
 
@@ -154,16 +154,15 @@ def priceIndex_avgPrice(item, kind, rank, element):
     if priceIndex_avgPrice_graph_dict[item][kind][rank][element]==[]:
         query = "SELECT priceIndex.`{3}`,priceTable.price,priceTable.timestamp                    FROM priceIndex RIGHT JOIN priceTable                    ON priceIndex.`날짜`==priceTable.timestamp                    WHERE priceTable.item_name='{0}' AND priceTable.rank='{2}' AND priceTable.kind_name='{1}' AND priceTable.timestamp NOT IN ('-')"
 
-        grainFood_df = spark.sql(query.format(item,kind,rank,element))
-        grainFood_df = grainFood_df.withColumn(element, func.last(element, True).over(Window.partitionBy(func.month('timestamp')).orderBy('timestamp').rowsBetween(-sys.maxsize, 0))).orderBy(grainFood_df.timestamp.asc()).na.drop(subset=["price"])
+        priceIndex_df = spark.sql(query.format(item,kind,rank,element))
+        priceIndex_df = priceIndex_df.withColumn(element, func.last(element, True).over(Window.partitionBy(func.month('timestamp')).orderBy('timestamp').rowsBetween(-sys.maxsize, 0))).orderBy(priceIndex_df.timestamp.asc()).na.drop(subset=["price"])
 
 
-        grainFood_df = grainFood_df.groupBy(element).agg(func.avg('price')).sort(func.asc(element)).na.drop(subset=[element])
+        priceIndex_df = priceIndex_df.groupBy(element).agg(func.avg('price')).sort(func.asc(element)).na.drop(subset=[element])
+        priceIndex_df = priceIndex_df.withColumnRenamed(element,"price_index")
+        priceIndex_df = priceIndex_df.withColumnRenamed('avg(price)',"avg_price")
 
-        # grainFood_df.show()
-
-
-        map_datas = map(lambda row: row.asDict(), grainFood_df.collect()) # dataframe을 map으로 바꾸기 (df.colloect()로 dataframe을 list화 한다)
+        map_datas = map(lambda row: row.asDict(), priceIndex_df.collect()) # dataframe을 map으로 바꾸기 (df.colloect()로 dataframe을 list화 한다)
         graph_datas = list(map_datas) # map을 list로 바꾸기
         
         priceIndex_avgPrice_graph_dict[item][kind][rank][element] = graph_datas
