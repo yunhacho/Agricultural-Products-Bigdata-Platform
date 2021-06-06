@@ -10,6 +10,21 @@ from price_everydays import UpdatePrice
 from oil_everyday import UpdateOilPrice
 from weather_everyday import UpdateWeather
 
+import sys
+import findspark
+findspark.init() #jupyter notebook에서 -> 사용하면 pyspark를 일반 library처럼 사용 가능.
+findspark.find()
+import pyspark
+findspark.find()
+
+from pyspark import SparkContext, SQLContext
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+     .master("local") \
+     .appName("Spark_test") \
+     .config("spark.some.config.option", "some-value") \
+     .getOrCreate()
 
 # In[ ]:
 
