@@ -338,7 +338,7 @@ extension SecondTabController : UITableViewDataSource{
             
             
             cell.marketnameLabel.text = AuctionList[indexPath.row].marketname
-            cell.conameLabel.text = AuctionList[indexPath.row].codname
+            cell.conameLabel.text = AuctionList[indexPath.row].coname
             
             return cell
         }
@@ -359,8 +359,8 @@ extension SecondTabController {
         print("\(WasURL.getURL(url:requestURL.record))")
         
         getAuctions(url : "\(WasURL.getURL(url:requestURL.record))"){ [weak self] result in
-            for i in 0..<result.contents.count{
-                self?.AuctionList.append(Auction(mclassname: result.contents[i].mclassname, sclassname: result.contents[i].sclassname, bidtime: result.contents[i].bidtime, price: result.contents[i].price, gradename: result.contents[i].gradename, marketname: result.contents[i].marketname, codname: result.contents[i].codname, sanji: result.contents[i].sanji, tradeamt: result.contents[i].tradeamt, unitname: result.contents[i].unitname))
+            for i in stride(from : result.contents.count-1,to: -1, by: -1 ) {
+                self?.AuctionList.append(Auction(mclassname: result.contents[i].mclassname, sclassname: result.contents[i].sclassname, bidtime: result.contents[i].bidtime, price: result.contents[i].price, gradename: result.contents[i].gradename, marketname: result.contents[i].marketname, coname: result.contents[i].coname, sanji: result.contents[i].sanji, tradeamt: result.contents[i].tradeamt, unitname: result.contents[i].unitname))
             }
             
             DispatchQueue.main.async {
@@ -385,7 +385,7 @@ struct Auction : Codable {
     let price : Int!
     let gradename : String!
     let marketname : String!
-    let codname :  String!
+    let coname :  String!
     let sanji : String!
     let tradeamt : Int!
     let unitname : String!

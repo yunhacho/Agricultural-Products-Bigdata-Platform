@@ -240,7 +240,6 @@ class PredictPriceViewController : UIViewController{
 
 extension PredictPriceViewController : UIPickerViewDelegate , UIPickerViewDataSource {
     
-    
     @objc func changed(){
         let dateformatter = DateFormatter()
         dateformatter.dateStyle = .none
@@ -436,11 +435,12 @@ extension PredictPriceViewController{
         print("\(WasURL.getURL(url:requestURL.price_predict))?item=\(item)&kind=\(kind)&rank=\(rank)")
         getPredictPrice(url : "\(WasURL.getURL(url:requestURL.price_predict))?item=\(item)&kind=\(kind)&rank=\(rank)"){ [weak self] result in
             
-            self?.PredictPrice = result.predict_price
+            self?.PredictPrice = Double(result.predict_price)!
             DispatchQueue.main.async {
                 let numberFormatter = NumberFormatter()
-                numberFormatter.numberStyle = .decimal
-                self?.contentLabel.text = numberFormatter.string(for: result.predict_price)! + "(원)"
+                numberFormatter.numberStyle = .none
+                self?.contentLabel.text = numberFormatter.string(for: self?.PredictPrice)! + "(원)"
+
             }
         }
     }
@@ -448,5 +448,5 @@ extension PredictPriceViewController{
 }
 
 struct PredictFood : Codable {
-    let predict_price : Double
+    let predict_price : String
 }

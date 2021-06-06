@@ -15,7 +15,7 @@ class FoodCompareViewController : UIViewController{
     
     var SettingView : UIView!
     
-    
+
     let ItemTitleLabel = UILabel()
     let ItemEditText = UITextField()
     let ItemPicker = UIPickerView()
@@ -34,6 +34,7 @@ class FoodCompareViewController : UIViewController{
     
     var selectItem = "오이"
     var selectDate = "20210602"
+    var currentDate : Date!
     
     let FoodTitleLabel = UIView()
     let FoodTableView = UITableView()
@@ -232,7 +233,7 @@ class FoodCompareViewController : UIViewController{
         FoodTableView.translatesAutoresizingMaskIntoConstraints = false
         FoodTableView.register(FoodCell.self, forCellReuseIdentifier: FoodCell.identifier)
         FoodTableView.dataSource = self
-        FoodTableView.rowHeight = height * 0.25
+        FoodTableView.rowHeight = height * 0.3
     }
     
 //    func initFoodContents(){
@@ -271,6 +272,7 @@ extension FoodCompareViewController : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
     
     
@@ -318,14 +320,15 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
     }
     
     func InitDate(){
+        
         let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy/MM/dd"
-        let date = dateformatter.string(from: DatePicker.date)
+        dateformatter.dateFormat = "yyyyMMdd"
+        let date = dateformatter.string(from: Calendar.current.date(byAdding: .day, value: -2, to: Date())!)
         selectDate = date
+        currentDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
     }
     
     func InitDatePicker(){
-
         let btnDone = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(self.onDatePickDone))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let btnCancel = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(self.onDatePickCancel))
@@ -339,14 +342,13 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         self.DateToolbar.setItems([btnCancel , space , btnDone], animated: true)   // 버튼추가
         self.DateToolbar.isUserInteractionEnabled = true   // 사용자 클릭 이벤트 전달
         
-        
         DatePicker.preferredDatePickerStyle = .wheels
         DatePicker.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200)
         DatePicker.datePickerMode = .date
         DatePicker.timeZone = NSTimeZone.local
        
         DatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
-        DatePicker.maximumDate = Date()
+        DatePicker.maximumDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())
         DatePicker.setValue(UIColor.white, forKey: "backgroundColor")
         //TimeEditText.frame = CGRect(x: 0, y: 0, width:100, height: 30)
         DateEditText.inputView = DatePicker
@@ -373,6 +375,7 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy/MM/dd"
         DateEditText.text = dateformatter.string(from: DatePicker.date)
+        currentDate = DatePicker.date
         
         dateformatter.dateFormat = "yyyyMMdd"
         selectDate = dateformatter.string(from: DatePicker.date)
@@ -422,17 +425,34 @@ extension FoodCompareViewController{
     func getBeforePrice(item : Int, date : String){
         
         print("\(WasURL.getURL(url:requestURL.days_before))?item=\(item)&date=\(date)")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.year, .month, .weekOfMonth, .day]
+        formatter.unitsStyle = .full
+        
         getBeforeFood(url : "\(WasURL.getURL(url:requestURL.days_before))?item=\(item)&date=\(date)"){ [weak self] result in
+            print(result)
+            self?.FoodContents.removeAll()
+            
             for i in 0..<result.count{
-                self?.FoodContents.append(FoodContent(item_name: result[i].item_name, kind_name: result[i].kind_name, rank: result[i].rank, price: result[i].price, unit: result[i].unit, timestamp: result[i].timestamp))
+                let beforeDate : Date = dateFormatter.date(from: result[i].timestamp)!
+                    
+                let diffVal = formatter.string(from: beforeDate, to: (self?.currentDate)!)!
+                let diffDate = diffVal.split(separator: " ")
+                print(diffDate)
+                self?.FoodContents.append(FoodContent(item_name: result[i].item_name, kind_name: result[i].kind_name, rank: result[i].rank, price: result[i].price, unit: result[i].unit, timestamp: String(diffDate[0]) +
+                                                      "전"))
             }
             
             DispatchQueue.main.async {
                 self?.tableViewSetting(width: (self?.view.frame.width)!, height: (self?.view.frame.height)! * 0.3)
+                self?.FoodTableView.reloadData()
             }
         }
     }
-    
 }
 
 struct FoodContentList : Codable{

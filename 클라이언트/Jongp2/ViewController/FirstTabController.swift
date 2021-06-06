@@ -122,7 +122,7 @@ class FirstTabController: UIViewController {
         contentView.snp.makeConstraints{ make in
             make.top.equalTo(tabCollectionView.snp.bottom).offset(0)
             make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.78)
+            make.height.equalToSuperview().multipliedBy(0.60)
             
         }
     }

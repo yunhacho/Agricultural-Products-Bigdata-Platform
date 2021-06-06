@@ -42,7 +42,7 @@ class GraphViewController : UIViewController{
     
     let SearchBtn = UIButton()
     
-    let ItemNames = ["유가별 채소 가격 변동" , "연도별 채소 생산량,면적,평균가", "날씨 요인에 따른 채소 가격 변동", "기타 요인에 따른 채소 가격 변동"]
+    let ItemNames = ["유가별 채소 가격 변동" , "연도별 채소 생산량 및 평균가", "날씨 요인에 따른 채소 가격 변동", "기타 요인에 따른 채소 가격 변동"]
     var Item = "유가별 채소 가격 변동"
     
     var selectItem = "유가별 채소 가격 변동"
@@ -55,7 +55,7 @@ class GraphViewController : UIViewController{
     var KindList : [String] = ["취청50개", "가시계통(1kg)", "다다기계통(100개)"]
     var RankList : [String] = ["중품", "상품"]
     
-    let Item_dict : [String:Int] = ["유가별 채소 가격 변동" : 0, "연도별 채소 생산량,면적,평균가" : 1, "날씨 요인에 따른 채소 가격 변동" : 2, "기타 요인에 따른 채소 가격 변동" : 3]
+    let Item_dict : [String:Int] = ["유가별 채소 가격 변동" : 0, "연도별 채소 생산량 및 평균가" : 1, "날씨 요인에 따른 채소 가격 변동" : 2, "기타 요인에 따른 채소 가격 변동" : 3]
     let food_dict : [String:Int] = ["오이":0, "양파": 1, "파":2, "호박":3, "쌀":4]
     let kind_dict : [String:Int] = ["취청50개":0, "가시계통(1kg)":1, "다다기계통(100개)":2, "햇양파(1kg)":3, "양파(1kg)":4, "수입(1kg)":5, "대파(1kg)":6, "쪽파(1kg)":7, "애호박(20개)":8, "쥬키니(1kg)":9, "일반계(1kg)":10, "햇일반계(1kg)":11]
     let rank_dict: [String:Int] = ["중품":0, "상품":1]
@@ -338,7 +338,7 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         if LineGraph != nil {
             LineGraph.removeFromSuperview()
         }
-        if selectItem == "유가별 채소 가격 변동" || selectItem == "연도별 채소 생산량,면적,평균가" {
+        if selectItem == "유가별 채소 가격 변동" || selectItem == "연도별 채소 생산량 및 평균가" {
             InitUI()
             addPickerViewType(type: 0)
             makeConstraintsType(type : 0)
@@ -346,7 +346,7 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
             if selectItem == "유가별 채소 가격 변동"{
                 xLabel = "평균 유가"
                 yLabel = "채소 평균가"
-            } else if selectItem == "연도별 채소 생산량,면적,평균가"{
+            } else if selectItem == "연도별 채소 생산량 및 평균가"{
                 xLabel = "생산 연도"
                 yLabel = "생산량"
             }
@@ -608,10 +608,11 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
     @objc func onElementPickDone() {
         ElementEditText.text = selectElement
         ElementEditText.resignFirstResponder()
-        xLabel = "\(selectElement)에 따른 채소 평균가"
+        yLabel = "\(selectElement)에 따른 채소 평균가"
         
         if selectItem == "날씨 요인에 따른 채소 가격 변동"{
             element_dict = ["평균 기온" : 0, "평균 습도" : 1, "강수량" : 2, "평균 풍량" : 3]
+            
         } else if selectItem == "기타 요인에 따른 채소 가격 변동" {
             element_dict = ["곡물 및 식량작물" : 0, "채소 및 과실" : 1, "식료품" : 2, "음료품" : 3, "비료 및 농약" : 4, "농업 및 건설용 기계" : 5, "기타 운송 장비" : 6, "전력 가스 및 증기" : 7, "수도 폐기물 처리 및 재활용 서비스" : 8, "음식점 및 숙박 서비스" : 9, "장비 용품 및 지식 재산권 임대" : 10]
         }

@@ -27,18 +27,22 @@ extension GraphViewController{
         // 데이터 생성
         var dataEntries: [ChartDataEntry] = []
         for i in 0..<xData.count {
-            let dataEntry = ChartDataEntry(x: xData[i], y: yData[i])
-            dataEntries.append(dataEntry)
+            if i % 70  == 0{
+                let dataEntry = ChartDataEntry(x: xData[i], y: yData[i])
+                dataEntries.append(dataEntry)
+            }
         }
         
         let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
         line1.colors = [NSUIColor.systemGreen]
         line1.lineWidth = 3.0
+        line1.circleRadius = CGFloat.init(0)
        // line1.mode = .cubicBezier
         
         let data = LineChartData()
         data.addDataSet(line1)
         data.setValueFont(UIFont.systemFont(ofSize: 8, weight: .bold))
+        data.setDrawValues(false)
         
         LineGraph.xAxis.labelPosition = .bottom
         LineGraph.rightAxis.enabled = false
@@ -50,10 +54,10 @@ extension GraphViewController{
         //LineGraph.xAxis.spaceMin = 10
         //LineGraph.xAxis.spaceMax = 1 // 값이 커지면 훨씬 더 촘촘해진다.
         
-        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 12), textColor: .black)
+        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 10), textColor: .black)
         LineGraph.chartDescription?.text = selectItem
         LineGraph.data = data
-        LineGraph.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        LineGraph.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
     }
     
     func setYearLineChart(){
@@ -85,6 +89,9 @@ extension GraphViewController{
         
         var dataEntries3: [ChartDataEntry] = []
         for i in 0..<yData3.count {
+            if (yData3.count - 1) == i{
+                break
+            }
             let dataEntry3 = ChartDataEntry(x: xData[i], y: yData3[i])
             dataEntries3.append(dataEntry3)
         }
@@ -98,23 +105,27 @@ extension GraphViewController{
         let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
         line1.colors = [NSUIColor.systemGreen]
         line1.lineWidth = 3.0
+        line1.circleRadius = CGFloat.init(1.0)
         
         //생산량
         let line2 = LineChartDataSet(entries: dataEntries2, label: yLabel2)
         line2.colors = [NSUIColor.red]
         line2.lineWidth = 3.0
+        line2.circleRadius = CGFloat.init(1.0)
         
         //면적
         let line3 = LineChartDataSet(entries: dataEntries3, label: yLabel3)
         line3.colors = [NSUIColor.green]
         line3.valueFormatter = DefaultValueFormatter(formatter: formatter)
         line3.lineWidth = 3.0
+        line3.circleRadius = CGFloat.init(1.0)
         
         let data = LineChartData()
         data.addDataSet(line1)
-        data.addDataSet(line2)
+        // data.addDataSet(line2)
         data.addDataSet(line3)
         data.setValueFont(UIFont.systemFont(ofSize: 8, weight: .bold))
+        data.setDrawValues(false)
         
         let leftAxisFormatter = NumberFormatter()
         leftAxisFormatter.maximumFractionDigits = 0
@@ -124,14 +135,14 @@ extension GraphViewController{
         LineGraph.xAxis.valueFormatter = DefaultAxisValueFormatter(formatter: leftAxisFormatter)
         LineGraph.xAxis.labelPosition = .bottom
         LineGraph.rightAxis.enabled = false
-        LineGraph.xAxis.setLabelCount(xData.count, force: true)
+        LineGraph.xAxis.setLabelCount(5, force: true)
         LineGraph.minOffset = 30
         
-        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 12), textColor: .black)
+        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 10), textColor: .black)
         
         LineGraph.chartDescription?.text = selectItem
         LineGraph.data = data
-        LineGraph.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        LineGraph.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
     }
     
     func setWeatherAndPriceChart(){
@@ -164,10 +175,12 @@ extension GraphViewController{
         line1.colors = [NSUIColor.systemGreen]
         //line1.highlightEnabled = false
         line1.lineWidth = 3.0
+        line1.circleRadius = CGFloat.init(1.0)
         
         let data = LineChartData()
         data.addDataSet(line1)
         data.setValueFont(UIFont.systemFont(ofSize: 8, weight: .bold))
+        data.setDrawValues(false)
         
         let leftAxisFormatter = NumberFormatter()
         leftAxisFormatter.maximumFractionDigits = 0
@@ -176,20 +189,26 @@ extension GraphViewController{
 
         // 줌 안되게
         //LineGraph.doubleTapToZoomEnabled = true
-        LineGraph.xAxis.labelCount = 5
+        //LineGraph.xAxis.labelCount = 5
         //LineGraph.xAxis.valueFormatter = self // label을 텍스트로 매칭
         LineGraph.xAxis.labelPosition = .bottom
         LineGraph.rightAxis.enabled = false
-        LineGraph.xAxis.setLabelCount(xData.count, force: true)
+        LineGraph.xAxis.setLabelCount(5, force: true)
         LineGraph.minOffset = 30
-        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 12), textColor: .black)
+        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 10), textColor: .black)
         
         LineGraph.chartDescription?.text = selectItem
         LineGraph.data = data
-        LineGraph.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        LineGraph.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
     }
     
     func GraphDataRequest(selectItem : String){
+        
+        if LineGraph != nil {
+            LineGraph.removeFromSuperview()
+        }
+        
+        
         if Item_dict[selectItem] == 0{
             getOilGraph(item : food_dict[selectFood]!, kind : kind_dict[selectKind]!, rank : rank_dict[selectRank]!)
         } else if Item_dict[selectItem] == 1{
@@ -266,7 +285,7 @@ extension GraphViewController{
             self?.yData.removeAll()
             
             for i in 0..<result.priceIndex_avgPrice_df.count{
-                self?.xData.append(Double(result.priceIndex_avgPrice_df[i].element))
+                self?.xData.append(Double(result.priceIndex_avgPrice_df[i].price_index))
                 self?.yData.append(result.priceIndex_avgPrice_df[i].avg_price)
             }
             
@@ -317,15 +336,14 @@ struct weatherContent : Codable{
 
 
 struct priceContentList : Codable{
-    let current_priceIndex : Int
+    let current_priceIndex : Double
     let priceIndex_avgPrice_df : [priceContent]
 }
 
 struct priceContent : Codable{
-    let element : Int
+    let price_index : Double
     let avg_price : Double
 }
-
 
 class PillMarker: MarkerImage {
 
@@ -362,14 +380,17 @@ class PillMarker: MarkerImage {
         context.setStrokeColor(UIColor.black.cgColor)
         context.closePath()
         context.drawPath(using: .fillStroke)
+        
         labelText.draw(with: rectangle, options: .usesLineFragmentOrigin, attributes: attrs, context: nil)
     }
 
     override func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
-        labelText = customString(entry.y)
+        labelText = customString(entry.x, entry.y)
     }
 
-    private func customString(_ value: Double) -> String {
-        return "\(value)"
+    private func customString(_ valuex: Double, _ valuey: Double) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return "x:\(numberFormatter.string(for: valuex)!)\ny:\(numberFormatter.string(for: valuey)!)"
     }
 }

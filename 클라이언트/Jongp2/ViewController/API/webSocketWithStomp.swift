@@ -115,6 +115,9 @@ class webSocketWithStomp: StompClientLibDelegate{
             
             let parsedData = try JSONDecoder().decode(StompAuctionFormat.self, from: jsonBody.data(using: .utf8)!)
             print(parsedData)
+            if self.secondTabController.AuctionList.count > 20 {
+                self.secondTabController.AuctionList.removeAll()
+            }
             self.secondTabController.AuctionList.append(parsedData.content)
             self.secondTabController.FoodTableView.reloadData()
             let indexPath = IndexPath(row: self.secondTabController.AuctionList.count-1, section: 0)

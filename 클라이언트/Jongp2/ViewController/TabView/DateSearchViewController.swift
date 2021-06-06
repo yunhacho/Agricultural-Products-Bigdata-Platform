@@ -253,7 +253,7 @@ class DateSearchViewController : UIViewController{
         FoodTableView.translatesAutoresizingMaskIntoConstraints = false
         FoodTableView.register(FoodCell.self, forCellReuseIdentifier: FoodCell.identifier)
         FoodTableView.dataSource = self
-        FoodTableView.rowHeight = height * 0.25
+        FoodTableView.rowHeight = height * 0.3
     }
     
     func initFoodContents(){
@@ -359,7 +359,7 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         StartDatePicker.timeZone = NSTimeZone.local
        
         StartDatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
-        StartDatePicker.maximumDate = Date()
+        StartDatePicker.maximumDate = Calendar.current.date(byAdding: .day, value: -3, to: Date())
         StartDatePicker.setValue(UIColor.white, forKey: "backgroundColor")
         
         
@@ -398,7 +398,7 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         EndDatePicker.timeZone = NSTimeZone.local
        
         EndDatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
-        EndDatePicker.maximumDate = Date()
+        EndDatePicker.maximumDate = Calendar.current.date(byAdding: .day, value: -3, to: Date())
         EndDatePicker.setValue(UIColor.white, forKey: "backgroundColor")
         
         //TimeEditText.frame = CGRect(x: 0, y: 0, width:100, height: 30)
@@ -450,9 +450,9 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
     func InitDate(){
         
         let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy/MM/dd"
-        let date = dateformatter.string(from: EndDatePicker.date)
+        dateformatter.dateFormat = "yyyyMMdd"
         
+        let date = dateformatter.string(from: Calendar.current.date(byAdding: .day, value: -3, to: Date())!)
         selectStartDate = date
         selectEndDate = date
     }
@@ -503,6 +503,7 @@ extension DateSearchViewController{
         }
             
         getBeforeFood(url : url ){ [weak self] result in
+            self?.FoodContents.removeAll()
             for i in 0..<result.count{
                 self?.FoodContents.append(FoodContent(item_name: result[i].item_name, kind_name: result[i].kind_name, rank: result[i].rank, price: result[i].price, unit: result[i].unit, timestamp: result[i].timestamp))
             }
@@ -511,6 +512,7 @@ extension DateSearchViewController{
                
                 //self?.initFoodContents()
                 self?.tableViewSetting(width: (self?.view.frame.width)!, height: (self?.view.frame.height)! * 0.3)
+                self?.FoodTableView.reloadData()
             }
         }
     }
