@@ -34,7 +34,7 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="실시간 경매" image="arrow.down.right.and.arrow.up.left" catalog="system" id="lQc-Lc-ntX"/>
+                    <tabBarItem key="tabBarItem" title="실시간 경매" image="icon2" id="lQc-Lc-ntX"/>
                     <navigationItem key="navigationItem" title="실시간 경매 조회" id="Bge-YG-2o0"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
@@ -44,7 +44,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.down.right.and.arrow.up.left" catalog="system" width="128" height="118"/>
+        <image name="icon2" width="37.5" height="37.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

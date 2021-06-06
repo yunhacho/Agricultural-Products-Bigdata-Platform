@@ -325,7 +325,7 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         ItemEditText.textAlignment = .center
         ItemEditText.text = ItemNames[0]
         ItemEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onItemPickDone() {
@@ -374,7 +374,7 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         
         StartDateEditText.text = date
         StartDateEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        StartDateEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        StartDateEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     func InitEndDatePicker(){
@@ -412,7 +412,7 @@ extension DateSearchViewController : UIPickerViewDelegate , UIPickerViewDataSour
         
         EndDateEditText.text = date
         EndDateEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        EndDateEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        EndDateEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func changed(){

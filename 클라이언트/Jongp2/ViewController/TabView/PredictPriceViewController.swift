@@ -315,7 +315,7 @@ extension PredictPriceViewController : UIPickerViewDelegate , UIPickerViewDataSo
         FoodEditText.textAlignment = .center
         FoodEditText.text = FoodList[0]
         FoodEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        FoodEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        FoodEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onFoodPickDone() {
@@ -377,7 +377,7 @@ extension PredictPriceViewController : UIPickerViewDelegate , UIPickerViewDataSo
         KindEditText.textAlignment = .center
         KindEditText.text = KindList[0]
         KindEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        KindEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        KindEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onKindPickDone() {
@@ -415,7 +415,7 @@ extension PredictPriceViewController : UIPickerViewDelegate , UIPickerViewDataSo
         RankEditText.textAlignment = .center
         RankEditText.text = RankList[0]
         RankEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        RankEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        RankEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onRankPickDone() {

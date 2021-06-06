@@ -17,8 +17,8 @@ class SecondTabController : UIViewController{
     let FoodTableView = UITableView()
     var FoodContents : [FoodContent] = []
     
-    let borderWidth : CGFloat = 0.6
-    let borderColor : CGColor = UIColor.black.cgColor
+    let borderWidth : CGFloat = 0.3
+    let borderColor : CGColor = UIColor.white.cgColor
     
     var AuctionList : [Auction] = []
     
@@ -304,7 +304,11 @@ extension SecondTabController : UITableViewDataSource{
             cell.mclassLabel.text = AuctionList[indexPath.row].mclassname + "(\(String( AuctionList[indexPath.row].gradename)))"
             cell.unitnameLabel.text = AuctionList[indexPath.row].unitname
             
-            
+            if indexPath.row % 2 == 1 {
+                cell.backgroundColor = UIColor(argb: ColorSetting.backgroundColor).withAlphaComponent(0.15)
+            }else {
+                cell.backgroundColor = .clear
+            }
             
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
@@ -315,9 +319,11 @@ extension SecondTabController : UITableViewDataSource{
             
             cell.sanjiLabel.text = AuctionList[indexPath.row].sanji
             
+//            if AuctionList[indexPath.row].bidtime[10] == "T"{
+//                AuctionList[indexPath.row].bidtime[10] = " "
+//            }
             let newString = AuctionList[indexPath.row].bidtime.replacingOccurrences(of: "T", with: " ", options: .literal, range: nil)
             
-        
             let dateString:String = newString
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

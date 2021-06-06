@@ -32,19 +32,25 @@ extension GraphViewController{
         }
         
         let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
-        line1.colors = [NSUIColor.blue]
+        line1.colors = [NSUIColor.systemGreen]
         line1.lineWidth = 3.0
+       // line1.mode = .cubicBezier
         
         let data = LineChartData()
         data.addDataSet(line1)
+        data.setValueFont(UIFont.systemFont(ofSize: 8, weight: .bold))
         
         LineGraph.xAxis.labelPosition = .bottom
         LineGraph.rightAxis.enabled = false
-        LineGraph.xAxis.setLabelCount(xData.count, force: false)
+        LineGraph.xAxis.setLabelCount(5, force: false)
+        LineGraph.minOffset = 30
         
         //LineGraph.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
-        LineGraph.xAxis.labelCount = 2 // x축에 label을 몇개 둘 것인가?
+        //LineGraph.xAxis.labelCount = 2 // x축에 label을 몇개 둘 것인가?
+        //LineGraph.xAxis.spaceMin = 10
+        //LineGraph.xAxis.spaceMax = 1 // 값이 커지면 훨씬 더 촘촘해진다.
         
+        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 12), textColor: .black)
         LineGraph.chartDescription?.text = selectItem
         LineGraph.data = data
         LineGraph.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
@@ -90,7 +96,7 @@ extension GraphViewController{
         
         //평균 가격
         let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
-        line1.colors = [NSUIColor.blue]
+        line1.colors = [NSUIColor.systemGreen]
         line1.lineWidth = 3.0
         
         //생산량
@@ -108,6 +114,7 @@ extension GraphViewController{
         data.addDataSet(line1)
         data.addDataSet(line2)
         data.addDataSet(line3)
+        data.setValueFont(UIFont.systemFont(ofSize: 8, weight: .bold))
         
         let leftAxisFormatter = NumberFormatter()
         leftAxisFormatter.maximumFractionDigits = 0
@@ -118,6 +125,9 @@ extension GraphViewController{
         LineGraph.xAxis.labelPosition = .bottom
         LineGraph.rightAxis.enabled = false
         LineGraph.xAxis.setLabelCount(xData.count, force: true)
+        LineGraph.minOffset = 30
+        
+        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 12), textColor: .black)
         
         LineGraph.chartDescription?.text = selectItem
         LineGraph.data = data
@@ -125,14 +135,13 @@ extension GraphViewController{
     }
     
     func setWeatherAndPriceChart(){
-        
         LineGraph = LineChartView()
         self.view.addSubview(LineGraph)
         LineGraph.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(1)
             make.height.equalToSuperview().multipliedBy(0.5)
-            make.top.equalTo(SearchBtn.snp.bottom).offset(20)
+            make.top.equalTo(SearchBtn.snp.bottom).offset(10)
         }
         
         LineGraph.noDataText = "데이터가 없습니다."
@@ -152,12 +161,13 @@ extension GraphViewController{
         
         //평균 가격
         let line1 = LineChartDataSet(entries: dataEntries, label: yLabel)
-        line1.colors = [NSUIColor.blue]
-        line1.highlightEnabled = false
+        line1.colors = [NSUIColor.systemGreen]
+        //line1.highlightEnabled = false
         line1.lineWidth = 3.0
         
         let data = LineChartData()
         data.addDataSet(line1)
+        data.setValueFont(UIFont.systemFont(ofSize: 8, weight: .bold))
         
         let leftAxisFormatter = NumberFormatter()
         leftAxisFormatter.maximumFractionDigits = 0
@@ -165,12 +175,14 @@ extension GraphViewController{
         leftAxisFormatter.locale = .current
 
         // 줌 안되게
-        LineGraph.doubleTapToZoomEnabled = true
+        //LineGraph.doubleTapToZoomEnabled = true
         LineGraph.xAxis.labelCount = 5
         //LineGraph.xAxis.valueFormatter = self // label을 텍스트로 매칭
         LineGraph.xAxis.labelPosition = .bottom
         LineGraph.rightAxis.enabled = false
         LineGraph.xAxis.setLabelCount(xData.count, force: true)
+        LineGraph.minOffset = 30
+        LineGraph.marker = PillMarker(color: .white, font: UIFont.boldSystemFont(ofSize: 12), textColor: .black)
         
         LineGraph.chartDescription?.text = selectItem
         LineGraph.data = data
@@ -217,7 +229,6 @@ extension GraphViewController{
             
             for i in 0..<result.contents.count{
                 self?.xData.append(Double(result.contents[i].year))
-                
                 self?.yData.append(Double(result.contents[i].output)!)
                 self?.yData2.append(Double(result.contents[i].area)!)
                 self?.yData3.append(result.contents[i].avg_price)
@@ -313,4 +324,52 @@ struct priceContentList : Codable{
 struct priceContent : Codable{
     let element : Int
     let avg_price : Double
+}
+
+
+class PillMarker: MarkerImage {
+
+    private (set) var color: UIColor
+    private (set) var font: UIFont
+    private (set) var textColor: UIColor
+    private var labelText: String = ""
+    private var attrs: [NSAttributedString.Key: AnyObject]!
+
+    init(color: UIColor, font: UIFont, textColor: UIColor) {
+        self.color = color
+        self.font = font
+        self.textColor = textColor
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        attrs = [.font: font, .paragraphStyle: paragraphStyle, .foregroundColor: textColor, .baselineOffset: NSNumber(value: -4)]
+        
+        super.init()
+    }
+
+    override func draw(context: CGContext, point: CGPoint) {
+        let labelWidth = labelText.size(withAttributes: attrs).width + 10
+        let labelHeight = labelText.size(withAttributes: attrs).height + 4
+
+        var rectangle = CGRect(x: point.x, y: point.y, width: labelWidth, height: labelHeight)
+        rectangle.origin.x -= rectangle.width / 2.0
+        let spacing: CGFloat = 20
+        rectangle.origin.y -= rectangle.height + spacing
+
+        let clipPath = UIBezierPath(roundedRect: rectangle, cornerRadius: 6.0).cgPath
+        context.addPath(clipPath)
+        context.setFillColor(UIColor.white.cgColor)
+        context.setStrokeColor(UIColor.black.cgColor)
+        context.closePath()
+        context.drawPath(using: .fillStroke)
+        labelText.draw(with: rectangle, options: .usesLineFragmentOrigin, attributes: attrs, context: nil)
+    }
+
+    override func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
+        labelText = customString(entry.y)
+    }
+
+    private func customString(_ value: Double) -> String {
+        return "\(value)"
+    }
 }

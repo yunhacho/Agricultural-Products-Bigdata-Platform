@@ -52,7 +52,7 @@ class GraphViewController : UIViewController{
     var selectElement = "평균 기온"
     
     var FoodList : [String] = ["오이" , "양파", "파", "쌀", "호박"]
-    var KindList : [String] = ["취청50개", "가시계통(1kg)", "다다기계통(100개"]
+    var KindList : [String] = ["취청50개", "가시계통(1kg)", "다다기계통(100개)"]
     var RankList : [String] = ["중품", "상품"]
     
     let Item_dict : [String:Int] = ["유가별 채소 가격 변동" : 0, "연도별 채소 생산량,면적,평균가" : 1, "날씨 요인에 따른 채소 가격 변동" : 2, "기타 요인에 따른 채소 가격 변동" : 3]
@@ -298,9 +298,7 @@ class GraphViewController : UIViewController{
             make.top.equalTo(SettingView.snp.bottom)
         }
     }
-    
 }
-
 
 extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
     
@@ -330,7 +328,7 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         ItemEditText.textAlignment = .center
         ItemEditText.text = ItemNames[0]
         ItemEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onItemPickDone() {
@@ -466,7 +464,7 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         FoodEditText.textAlignment = .center
         FoodEditText.text = FoodList[0]
         FoodEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        FoodEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        FoodEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onFoodPickDone() {
@@ -527,7 +525,7 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         KindEditText.textAlignment = .center
         KindEditText.text = KindList[0]
         KindEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        KindEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        KindEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onKindPickDone() {
@@ -566,7 +564,7 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         RankEditText.textAlignment = .center
         RankEditText.text = RankList[0]
         RankEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        RankEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        RankEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onRankPickDone() {
@@ -604,7 +602,7 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         ElementEditText.borderRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: 30))
         ElementEditText.textAlignment = .center
         ElementEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        ElementEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        ElementEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onElementPickDone() {
@@ -615,9 +613,8 @@ extension GraphViewController : UIPickerViewDelegate , UIPickerViewDataSource {
         if selectItem == "날씨 요인에 따른 채소 가격 변동"{
             element_dict = ["평균 기온" : 0, "평균 습도" : 1, "강수량" : 2, "평균 풍량" : 3]
         } else if selectItem == "기타 요인에 따른 채소 가격 변동" {
-            element_dict = ["곡물 및 식량작물" : 0, "채소 및 과실 " : 1, "식료품" : 2, "음료품" : 3, "비료 및 농약" : 4, "농업 및 건설용 기계" : 5, "기타 운송 장비" : 6, "전력 가스 및 증기" : 7, "수도 폐기물 처리 및 재활용 서비스" : 8, "음식점 및 숙박 서비스" : 9, "장비 용품 및 지식 재산권 임대" : 10]
+            element_dict = ["곡물 및 식량작물" : 0, "채소 및 과실" : 1, "식료품" : 2, "음료품" : 3, "비료 및 농약" : 4, "농업 및 건설용 기계" : 5, "기타 운송 장비" : 6, "전력 가스 및 증기" : 7, "수도 폐기물 처리 및 재활용 서비스" : 8, "음식점 및 숙박 서비스" : 9, "장비 용품 및 지식 재산권 임대" : 10]
         }
-        
     }
 
     // 피커뷰 > 취소 클릭

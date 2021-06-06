@@ -62,7 +62,7 @@ class webSocketWithStomp: StompClientLibDelegate{
     func stompClientDidConnect(client: StompClientLib!) {
         print("Socket is Connected : \(topic)")
         socketClient.subscribe(destination: topic)
-        sendData(data : "")
+        //sendData(data : "")
     }
     
     func stompClientDidDisconnect(client: StompClientLib!) {
@@ -111,8 +111,9 @@ class webSocketWithStomp: StompClientLibDelegate{
 //                return
 //            }
 //            print("tqtqtqtqtqtqtqtq")
-            let test = "{ \"content\" : {\"mclassname\":\"테스트\",\"sclassname\":\"새송이 새송이 (일반)\",\"bidtime\":\"2021-06-05T08:02:00\",\"price\":4800,\"gradename\":\"특\",\"marketname\":\"부산엄궁도매\",\"coname\":\"항도청과\",\"sanji\":\"경남 진주시\",\"tradeamt\":24,\"unitname\":\"2kg 봉지 11개\"}}".data(using: .utf8)!
-            let parsedData = try JSONDecoder().decode(StompAuctionFormat.self, from: test)
+//            let test = "{ \"content\" : {\"mclassname\":\"테스트\",\"sclassname\":\"새송이 새송이 (일반)\",\"bidtime\":\"2021-06-05T08:02:00\",\"price\":4800,\"gradename\":\"특\",\"marketname\":\"부산엄궁도매\",\"coname\":\"항도청과\",\"sanji\":\"경남 진주시\",\"tradeamt\":24,\"unitname\":\"2kg 봉지 11개\"}}".data(using: .utf8)!
+            
+            let parsedData = try JSONDecoder().decode(StompAuctionFormat.self, from: jsonBody.data(using: .utf8)!)
             print(parsedData)
             self.secondTabController.AuctionList.append(parsedData.content)
             self.secondTabController.FoodTableView.reloadData()
@@ -121,6 +122,5 @@ class webSocketWithStomp: StompClientLibDelegate{
         }catch{
             print("parsing error")
         }
-        
     }
 }

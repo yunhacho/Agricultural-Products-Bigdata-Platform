@@ -304,7 +304,7 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         ItemEditText.textAlignment = .center
         ItemEditText.text = ItemNames[0]
         ItemEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        ItemEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
     
     @objc func onItemPickDone() {
@@ -359,7 +359,7 @@ extension FoodCompareViewController : UIPickerViewDelegate , UIPickerViewDataSou
         
         DateEditText.text = date
         DateEditText.textColor = UIColor(rgb: ColorSetting.textColor).withAlphaComponent(1)
-        DateEditText.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        DateEditText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         
     }
     
