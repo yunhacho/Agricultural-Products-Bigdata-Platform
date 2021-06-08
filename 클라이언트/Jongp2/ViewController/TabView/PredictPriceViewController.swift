@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import DropDown
 import Charts
+import NVActivityIndicatorView
 
 class PredictPriceViewController : UIViewController{
     
@@ -54,6 +55,11 @@ class PredictPriceViewController : UIViewController{
     let borderWidth : CGFloat = 0.2
     let borderColor : CGColor = UIColor.lightGray.cgColor
     
+    let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 75, height: 75),
+                                            type: .ballSpinFadeLoader,
+                                            color: .black,
+                                            padding: 0)
+    let loadingView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
@@ -433,6 +439,9 @@ extension PredictPriceViewController{
     
     func getBeforePrice(item : Int, kind : Int, rank : Int){
         print("\(WasURL.getURL(url:requestURL.price_predict))?item=\(item)&kind=\(kind)&rank=\(rank)")
+        
+        makeIndicatorView()
+        
         getPredictPrice(url : "\(WasURL.getURL(url:requestURL.price_predict))?item=\(item)&kind=\(kind)&rank=\(rank)"){ [weak self] result in
             
             self?.PredictPrice = Double(result.predict_price)!
@@ -440,9 +449,29 @@ extension PredictPriceViewController{
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = .none
                 self?.contentLabel.text = numberFormatter.string(for: self?.PredictPrice)! + "(원)"
-
+                if((self?.indicator.isAnimating) != nil){
+                    self?.indicator.stopAnimating()
+                    self?.loadingView.removeFromSuperview()
+                    self?.indicator.removeFromSuperview()
+                }
             }
         }
+    }
+    
+    func makeIndicatorView(){
+        self.view.addSubview(loadingView)
+        self.view.addSubview(indicator)
+        loadingView.backgroundColor = UIColor.init(cgColor: CGColor(red: 220, green: 220, blue: 220, alpha: 0.9))
+        loadingView.snp.makeConstraints{ make in
+            make.top.left.right.bottom.equalTo(self.view).offset(0)
+        }
+        indicator.snp.makeConstraints{ make in
+            make.width.equalToSuperview().multipliedBy(0.15)
+            make.height.equalToSuperview().multipliedBy(0.15)
+            make.centerX.equalTo(self.view)
+            make.centerY.equalTo(300)
+        }
+        indicator.startAnimating()
     }
     
 }

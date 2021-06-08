@@ -9,12 +9,11 @@ import Foundation
 import UIKit
 import SnapKit
 import Alamofire
-
+import NVActivityIndicatorView
 
 class FoodCompareViewController : UIViewController{
     
     var SettingView : UIView!
-    
 
     let ItemTitleLabel = UILabel()
     let ItemEditText = UITextField()
@@ -43,6 +42,12 @@ class FoodCompareViewController : UIViewController{
     let borderWidth : CGFloat = 0.2
     let borderColor : CGColor = UIColor.lightGray.cgColor
     
+    let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 75, height: 75),
+                                            type: .ballSpinFadeLoader,
+                                            color: .black,
+                                            padding: 0)
+    let loadingView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLayoutSubviews()
         self.InitUI()
@@ -67,7 +72,6 @@ class FoodCompareViewController : UIViewController{
         SettingView.addSubview(ItemEditText)
         
         self.view.addSubview(SearchBtn)
-        
         self.view.addSubview(FoodTitleLabel)
         self.view.addSubview(FoodTableView)
     }
@@ -224,7 +228,7 @@ class FoodCompareViewController : UIViewController{
         
         FoodTableView.snp.makeConstraints{ make in
             make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.9)
+            make.height.equalToSuperview().multipliedBy(0.73)
             make.top.equalTo(FoodTitleLabel.snp.bottom)
         }
     }
@@ -233,7 +237,7 @@ class FoodCompareViewController : UIViewController{
         FoodTableView.translatesAutoresizingMaskIntoConstraints = false
         FoodTableView.register(FoodCell.self, forCellReuseIdentifier: FoodCell.identifier)
         FoodTableView.dataSource = self
-        FoodTableView.rowHeight = height * 0.3
+        FoodTableView.rowHeight = height * 0.25
     }
     
 //    func initFoodContents(){
@@ -262,6 +266,12 @@ extension FoodCompareViewController : UITableViewDataSource{
             cell.priceLabel.text = numberFormatter.string(for: FoodContents[indexPath.row].price)!
             cell.unitLabel.text = FoodContents[indexPath.row].unit
             cell.timestampLabel.text = FoodContents[indexPath.row].timestamp
+            
+            if indexPath.row % 2 == 1 {
+                cell.backgroundColor = UIColor(argb: ColorSetting.backgroundColor).withAlphaComponent(0.15)
+            }else {
+                cell.backgroundColor = .clear
+            }
             
             return cell
         }
@@ -428,13 +438,14 @@ extension FoodCompareViewController{
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        
+        //dateFormatter.timeZone = .current
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.year, .month, .weekOfMonth, .day]
         formatter.unitsStyle = .full
         
+        self.makeIndicatorView()
+        
         getBeforeFood(url : "\(WasURL.getURL(url:requestURL.days_before))?item=\(item)&date=\(date)"){ [weak self] result in
-            print(result)
             self?.FoodContents.removeAll()
             
             for i in 0..<result.count{
@@ -450,8 +461,31 @@ extension FoodCompareViewController{
             DispatchQueue.main.async {
                 self?.tableViewSetting(width: (self?.view.frame.width)!, height: (self?.view.frame.height)! * 0.3)
                 self?.FoodTableView.reloadData()
+                
+                if((self?.indicator.isAnimating) != nil){
+                    self?.indicator.stopAnimating()
+                    self?.loadingView.removeFromSuperview()
+                    self?.indicator.removeFromSuperview()
+                }
             }
         }
+
+    }
+    
+    func makeIndicatorView(){
+        self.view.addSubview(loadingView)
+        self.view.addSubview(indicator)
+        loadingView.backgroundColor = UIColor.init(cgColor: CGColor(red: 220, green: 220, blue: 220, alpha: 0.9))
+        loadingView.snp.makeConstraints{ make in
+            make.top.left.right.bottom.equalTo(self.view).offset(0)
+        }
+        indicator.snp.makeConstraints{ make in
+            make.width.equalToSuperview().multipliedBy(0.15)
+            make.height.equalToSuperview().multipliedBy(0.15)
+            make.centerX.equalTo(self.view)
+            make.centerY.equalTo(300)
+        }
+        indicator.startAnimating()
     }
 }
 

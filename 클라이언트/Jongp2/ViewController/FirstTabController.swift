@@ -123,7 +123,6 @@ class FirstTabController: UIViewController {
             make.top.equalTo(tabCollectionView.snp.bottom).offset(0)
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.60)
-            
         }
     }
     

@@ -4,6 +4,9 @@ PODS:
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
   - DropDown (2.3.13)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - SnapKit (5.0.1)
   - SocketRocket (0.5.1)
   - StompClientLib (1.4.1):
@@ -13,6 +16,7 @@ DEPENDENCIES:
   - Alamofire
   - Charts
   - DropDown
+  - NVActivityIndicatorView
   - SnapKit
   - StompClientLib
 
@@ -21,6 +25,7 @@ SPEC REPOS:
     - Alamofire
     - Charts
     - DropDown
+    - NVActivityIndicatorView
     - SnapKit
     - SocketRocket
     - StompClientLib
@@ -29,10 +34,11 @@ SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
   StompClientLib: ac40390e9660c574675f1c933bec81c8e2811a4f
 
-PODFILE CHECKSUM: 601a77c2669413ceedb0875df8459686558fcf82
+PODFILE CHECKSUM: a4a38a69e5b6335da5d7145781c175e600a20b25
 
 COCOAPODS: 1.10.1

@@ -285,8 +285,10 @@ extension GraphViewController{
             self?.yData.removeAll()
             
             for i in 0..<result.priceIndex_avgPrice_df.count{
-                self?.xData.append(Double(result.priceIndex_avgPrice_df[i].price_index))
-                self?.yData.append(result.priceIndex_avgPrice_df[i].avg_price)
+                if i % 20 == 0 {
+                    self?.xData.append(Double(result.priceIndex_avgPrice_df[i].price_index))
+                    self?.yData.append(result.priceIndex_avgPrice_df[i].avg_price)
+                }
             }
             
             DispatchQueue.main.async {

@@ -9,5 +9,6 @@ target 'Jongp2' do
   pod 'DropDown'
   pod 'Alamofire'
   pod 'StompClientLib'
+  pod 'NVActivityIndicatorView'
   # Pods for Jongp2
 end
