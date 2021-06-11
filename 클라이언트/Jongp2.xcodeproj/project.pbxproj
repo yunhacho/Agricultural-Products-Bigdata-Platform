@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		67B17D189FCACC367E815E82 /* Pods_Jongp2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 993BCA4680CBB609DC481C21 /* Pods_Jongp2.framework */; };
 		681BBD4F266B7A130025568A /* webSocketWithStomp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681BBD4E266B7A130025568A /* webSocketWithStomp.swift */; };
 		682ECB542663CDAE00F02DD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB532663CDAE00F02DD3 /* AppDelegate.swift */; };
 		682ECB562663CDAE00F02DD3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB552663CDAE00F02DD3 /* SceneDelegate.swift */; };
@@ -36,7 +35,23 @@
 		682ECB952666590900F02DD3 /* ColorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECB942666590900F02DD3 /* ColorTable.swift */; };
 		682ECBAA26667E7300F02DD3 /* AuctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECBA926667E7100F02DD3 /* AuctionCell.swift */; };
 		682ECBAC2666BBBF00F02DD3 /* request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ECBAB2666BBBE00F02DD3 /* request.swift */; };
+		6855C4232670BDC600997BA5 /* Pods_Jongp2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6855C41F2670BDAF00997BA5 /* Pods_Jongp2.framework */; };
+		6855C4242670BDC600997BA5 /* Pods_Jongp2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6855C41F2670BDAF00997BA5 /* Pods_Jongp2.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6855C4252670BDC600997BA5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6855C4242670BDC600997BA5 /* Pods_Jongp2.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		40C4E55E3928730D7835E507 /* Pods-Jongp2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jongp2.debug.xcconfig"; path = "Target Support Files/Pods-Jongp2/Pods-Jongp2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -70,6 +85,7 @@
 		682ECB942666590900F02DD3 /* ColorTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTable.swift; sourceTree = "<group>"; };
 		682ECBA926667E7100F02DD3 /* AuctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionCell.swift; sourceTree = "<group>"; };
 		682ECBAB2666BBBE00F02DD3 /* request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = request.swift; sourceTree = "<group>"; };
+		6855C41F2670BDAF00997BA5 /* Pods_Jongp2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Jongp2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		993BCA4680CBB609DC481C21 /* Pods_Jongp2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jongp2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE79E3EF6CFC6A7CB4CAF233 /* Pods-Jongp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jongp2.release.xcconfig"; path = "Target Support Files/Pods-Jongp2/Pods-Jongp2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67B17D189FCACC367E815E82 /* Pods_Jongp2.framework in Frameworks */,
+				6855C4232670BDC600997BA5 /* Pods_Jongp2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +224,7 @@
 		E6E894AD82D0C236D51D15C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6855C41F2670BDAF00997BA5 /* Pods_Jongp2.framework */,
 				993BCA4680CBB609DC481C21 /* Pods_Jongp2.framework */,
 			);
 			name = Frameworks;
@@ -225,6 +242,7 @@
 				682ECB4D2663CDAE00F02DD3 /* Frameworks */,
 				682ECB4E2663CDAE00F02DD3 /* Resources */,
 				1F2CC0F2979FCBF397C1293F /* [CP] Embed Pods Frameworks */,
+				6855C4252670BDC600997BA5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -501,11 +519,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 825B8L44JT;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				INFOPLIST_FILE = Jongp2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = junseok.Jongp2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -521,11 +541,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 825B8L44JT;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				INFOPLIST_FILE = Jongp2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = junseok.Jongp2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

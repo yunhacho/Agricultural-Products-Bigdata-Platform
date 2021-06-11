@@ -447,13 +447,10 @@ extension FoodCompareViewController{
         
         getBeforeFood(url : "\(WasURL.getURL(url:requestURL.days_before))?item=\(item)&date=\(date)"){ [weak self] result in
             self?.FoodContents.removeAll()
-            
             for i in 0..<result.count{
                 let beforeDate : Date = dateFormatter.date(from: result[i].timestamp)!
-                    
                 let diffVal = formatter.string(from: beforeDate, to: (self?.currentDate)!)!
                 let diffDate = diffVal.split(separator: " ")
-                print(diffDate)
                 self?.FoodContents.append(FoodContent(item_name: result[i].item_name, kind_name: result[i].kind_name, rank: result[i].rank, price: result[i].price, unit: result[i].unit, timestamp: String(diffDate[0]) +
                                                       "전"))
             }
@@ -461,7 +458,6 @@ extension FoodCompareViewController{
             DispatchQueue.main.async {
                 self?.tableViewSetting(width: (self?.view.frame.width)!, height: (self?.view.frame.height)! * 0.3)
                 self?.FoodTableView.reloadData()
-                
                 if((self?.indicator.isAnimating) != nil){
                     self?.indicator.stopAnimating()
                     self?.loadingView.removeFromSuperview()
